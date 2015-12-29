@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Utils</id>
+        <version>1.0.0.11</version>
+        <title>Utils</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Utils
+Dependencies:
+itextsharp
+GenericDao
+Oracle.DataAccess
+Prodesp.DataAccess</description>
+        <summary>Utils
+Dependencies:
+itextsharp
+GenericDao
+Oracle.DataAccess
+Prodesp.DataAccess</summary>
+    </metadata>
+    <files>
+        <file src="..\..\..\..\..\temp\nuget\refs\Utils.dll" target="lib\net45\Utils.dll" />
+    </files>
+</package>

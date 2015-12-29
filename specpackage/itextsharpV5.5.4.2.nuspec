@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>iTextSharpV5</id>
+        <version>5.4.2</version>
+        <authors>Bruno Lowagie,Paulo Soares</authors>
+        <licenseUrl>http://www.gnu.org/licenses/agpl.html</licenseUrl>
+        <projectUrl>http://sourceforge.net/projects/itextsharp/</projectUrl>
+        <iconUrl>http://itextpdf.com/img/logo.gif</iconUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>iTextSharp is a port of the iText open source java library for PDF generation written entirely in C# for the .NET platform.</description>
+        <summary />
+    </metadata>
+    <files>
+        <file src="lib\net45\itextsharpV5.dll" target="lib\net45\itextsharpV5.dll" />
+    </files>
+</package>

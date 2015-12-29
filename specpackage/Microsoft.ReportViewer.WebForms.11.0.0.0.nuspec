@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Microsoft.ReportViewer.WebForms</id>
+        <version>11.0.0.0</version>
+        <authors>prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Microsoft.ReportViewer.WebForms</description>
+    </metadata>
+    <files>
+        <file src="lib\net40\Microsoft.ReportViewer.WebForms.dll" target="lib\net40\Microsoft.ReportViewer.WebForms.dll" />
+    </files>
+</package>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SecurityGdae</id>
+        <version>1.0.0.9</version>
+        <title>SecurityGdae</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Api de Segurança
+Dependencias:
+GenericDao
+Oracle.DataAccess
+Utils
+UtilsCGRH</description>
+        <summary>Api de Segurança
+Dependencias:
+GenericDao
+Oracle.DataAccess
+Utils
+UtilsCGRH</summary>
+    </metadata>
+    <files>
+        <file src="..\..\..\..\..\temp\nuget\refs\SecurityGdae.dll" target="lib\net45\SecurityGdae.dll" />
+    </files>
+</package>

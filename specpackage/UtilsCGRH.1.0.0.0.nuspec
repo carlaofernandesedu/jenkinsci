@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>UtilsCGRH</id>
+        <version>1.0.0.0</version>
+        <title>UtilsCGRH</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>UtilsCGRH</description>
+        <summary>UtilsCGRH</summary>
+    </metadata>
+    <files>
+        <file src="..\..\..\..\..\temp\nuget\refs\UtilsCGRH.dll" target="lib\net45\UtilsCGRH.dll" />
+    </files>
+</package>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Prodesp.DataAccess</id>
+        <version>1.0.0.0</version>
+        <title>Prodesp.DataAccess</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Biblioteca uso generico para acesso Banco Dados via ADO.NET via Oracle</description>
+        <summary>Biblioteca uso generico para acesso Banco Dados via ADO.NET</summary>
+    </metadata>
+    <files>
+        <file src="..\..\..\..\..\temp\nuget\refs\Prodesp.DataAccess.dll" target="lib\net45\Prodesp.DataAccess.dll" />
+    </files>
+</package>

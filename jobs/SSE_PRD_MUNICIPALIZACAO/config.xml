@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>SSE_PRD_MUNICIPALIZACAO - job para deploy aplicacao municipalizacao</description>
+  <displayName>SSE_PRD_MUNICIPALIZACAO</displayName>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://seducsp.visualstudio.com/DefaultCollection/SistemasLegados/_git/MUNICIPALIZACAO</url>
+        <credentialsId>514db398-b47c-4ed1-bd27-4fb8cc10781d</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        <relativeTargetDir>source</relativeTargetDir>
+      </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+    </extensions>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>c:\sse\work\jks\prd\municipalizacao</customWorkspace>
+  <builders>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
+      <msBuildName>MSBUILD2013</msBuildName>
+      <msBuildFile>c:\sse\tools\msbuild\ZiparAppLegado.proj</msBuildFile>
+      <cmdLineArgs>/t:LerArquivo,ZipBuild,WebDeploy /p:Sistema=municipalizacao /p:Ambiente=producao  /p:ZipName=municipalizacao</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
