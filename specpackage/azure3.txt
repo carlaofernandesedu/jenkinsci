@@ -1,0 +1,9 @@
+https://msdn.microsoft.com/Library/vs/alm/Release/author-release-definition/more-release-definition
+https://msdn.microsoft.com/Library/vs/alm/Release/author-release-definition/understanding-environments
+https://msdn.microsoft.com/Library/vs/alm/Release/author-release-definition/understanding-tasks
+
+EXEMPLOS 
+https://msdn.microsoft.com/Library/vs/alm/Release/getting-started/deploy-to-azure
+https://msdn.microsoft.com/Library/vs/alm/Release/getting-started/deploy-to-azure#cloudservice
+
+https://azure.microsoft.com/pt-br/documentation/videos/azurecon-2015-manage-code-changes-to-web-apps-using-the-devops-features-of-azure-app-service-and-visual-studio-release-management/
