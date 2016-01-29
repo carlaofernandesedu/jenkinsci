@@ -5,6 +5,7 @@
 	<Ambiente     Condition="'$(Ambiente)'==''">teste</Ambiente>
 	<PathMSBuild  Condition="'$(PathMSBuild)'==''">c:\sse\tools\msbuild</PathMSBuild>
 	<BuildFolder  Condition="'$(BuildFolder)'==''">c:\sse\work\jks</BuildFolder>
+	<BinFolder  Condition="'$(BuildFolder)'==''">c:\sse\work\jks</BinFolder>
     <ZipName      Condition="'$(ZipName)'==''">package</ZipName>
 	<DestDeploy  Condition="'$(DestDeploy)'==''">c:\temp\webdeploy</DestDeploy>
   </PropertyGroup>
@@ -34,28 +35,28 @@
     </When> 
 	</Choose>
 	<Choose>
-    <When Condition = "'$(Sistema)'=='controleos' and '$(AmbienteDir)'!=''" >
+    <When Condition = "'$(Sistema)'=='genericdao' and '$(AmbienteDir)'!=''" >
 		<PropertyGroup>
-			<BuildFolder>$(BuildFolder)\$(AmbienteDir)\$(Sistema)\publish</BuildFolder>
+	        <BinFolder>$(BuildFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
+			<NgFolder>$(BuildFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>	     			
+			<BuildFolder>$(BuildFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
 			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
-			<DestDeploy>d:\$(Ambiente)\$(Sistema)</DestDeploy>
+			<DestDeploy>d:\$(Ambiente)\portalnet</DestDeploy>
 		</PropertyGroup>		
     </When>
-	 <When Condition = "'$(Sistema)'=='wscontagem' and '$(AmbienteDir)'!=''" >
-		<PropertyGroup>
-			<BuildFolder>$(BuildFolder)\$(AmbienteDir)\$(Sistema)\publish</BuildFolder>
-			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
-			<DestDeploy>d:\$(Ambiente)\servicosweb\contagem</DestDeploy>
-		</PropertyGroup>		
-    </When>
-	<When Condition = "'$(Sistema)'=='wsmanutencaousuario' and '$(AmbienteDir)'!=''" >
-		<PropertyGroup>
-			<BuildFolder>$(BuildFolder)\$(AmbienteDir)\$(Sistema)\publish</BuildFolder>
-			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
-			<DestDeploy>d:\$(Ambiente)\servicosweb\usuario</DestDeploy>
-		</PropertyGroup>		
-    </When>
-  </Choose>
+   </Choose>
+   
+
+<Target Name="CopyBins" Condition="'$(ZipNamePdb)'!=''" >
+		<ItemGroup>
+        <MySourceFiles Include="$(BinFolder)\**\*.*"/>
+		</ItemGroup>
+		<Message Text="Copiando os arquivo(s) binarios do $(BinFolder) para o $(BuildFolder)" />
+        <Copy
+            SourceFiles="@(MySourceFiles)"
+            DestinationFolder="$(BuildFolder)"
+        />
+</Target>   
 <Target Name="ZipBuildPdb" Condition="'$(ZipNamePdb)'!=''" >
 	<ItemGroup>
 		<ZipPdbSrcFiles Include="$(BuildFolder)\bin\*.pdb" />			
@@ -77,6 +78,13 @@
      <Exec EchoOff="true" Command="$(PathMSBuild)\msdeploy.exe -verb:sync -source:package='$(BuildFolder)\$(ZipName).zip' -dest:contentPath='$(DestDeploy)',computerName='https://10.200.240.19:8172/msdeploy.axd?site=Default%20Web%20Site',UserName='tfsdeploy',Password='Desp@2015',AuthType='NTLM' -allowUntrusted -enableRule:DoNotDeleteRule" />
      <Message Text="Processo Finalizado" />   
 </Target>
+<Target Name="PackNuget" Condition="'$(ZipNamePdb)'!=''" >
+       <Message Text="Gerando o arquivo de Pacote do Nuget os arquivo(s) binarios do $(BinFolder) para o $(BuildFolder)" />
+	   <ItemGroup>
+			<Command Include='C:\sse\tools\nuget\Nuget.exe pack $(NgFolder)\$(Sistema).nuspec -OutputDirectory "$(BuildFolder)"   -properties Configuration=Release' />
+		</ItemGroup>
+	   <Exec Command="%(Command.Identity)"/>
+</Target>   
 <Target Name="WebDeployLocal">
      <Exec Command="$(PathMSBuild)\msdeploy.exe -verb:sync -source:package='$(BuildFolder)\$(ZipName).zip' -dest:contentPath='$(DestDeploy)' -enableRule:DoNotDeleteRule " />
 </Target>
