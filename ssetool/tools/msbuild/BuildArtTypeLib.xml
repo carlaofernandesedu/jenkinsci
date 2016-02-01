@@ -1,0 +1,97 @@
+BuildArtTypeLibPortal
+BuildArtTypeWebPortal
+BuildArtTypeWebService
+BuildArtTypeWinService
+
+<BinFolder  Condition="'$(BuildFolder)'==''">c:\sse\work\jks</BinFolder>
+<DestDeploy  Condition="'$(DestDeploy)'==''">c:\temp\webdeploy</DestDeploy>
+Ambiente
+Sistema 
+PathLibMSBuild
+PubFolder
+DropFolder
+ZipName  
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="ZipBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  >
+<PropertyGroup>
+    <Sistema         Condition="'$(Sistema)'==''">sistema</Sistema>
+	<Ambiente        Condition="'$(Ambiente)'==''">ambiente</Ambiente>
+	<ZipName         Condition="'$(ZipName)'==''">zipname</ZipName>
+	<BuildFolder     Condition="'$(BuildFolder)'==''">buildfolder</BuildFolder>
+	<PathLibMSBuild  Condition="'$(PathMSBuild)'==''">c:\sse\tools\msbuild</PathLibMSBuild>
+	<BaseFolder      Condition="'$(BaseFolder)'==''">c:\sse\work\jks</BaseFolder>
+</PropertyGroup>
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Zip" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Cab" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.DNZip" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.File" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.FindUnder" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.RoboCopy" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Computer.WindowsService" />
+<PropertyGroup>
+     <AmbienteDir></AmbienteDir>
+	 <SistemaValido>0</SistemaValido>
+</PropertyGroup>
+<Choose>
+	<When Condition = "'$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<AmbienteDir>hom</AmbienteDir>
+		</PropertyGroup>		
+    </When> 
+    <When Condition = "'$(Ambiente)'=='producao'" >
+		<PropertyGroup>
+			<AmbienteDir>prd</AmbienteDir>
+		</PropertyGroup>		
+    </When> 
+	<When Condition = "'$(Ambiente)'=='teste'" >
+		<PropertyGroup>
+			<AmbienteDir>dev</AmbienteDir>
+		</PropertyGroup>		
+    </When> 
+</Choose>
+<Choose>  
+	<When Condition = "'$(Sistema)'=='genericdao' and '$(AmbienteDir)'!=''" >
+		<PropertyGroup>
+	        <SistemaValido>1</SistemaValido>
+		</PropertyGroup>		
+    </When>
+</Choose>  
+<PropertyGroup>
+    <BinFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
+    <NgFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>	     			
+	<BuildFolder Condition="'$(BuildFolder)'=='buildfolder'">$(BaseFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
+	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
+</PropertyGroup>		  
+<Target Name="CopyBins" Condition="'$(SistemaValido)'!='0'" >
+		<ItemGroup>
+			<MySourceFiles Include="$(BinFolder)\**\*.*"/>
+		</ItemGroup>
+		<ItemGroup>
+			<MySourceFiles Include="$(BinFolder)\$(Sistema).*"/>
+		</ItemGroup>
+		<Message Text="Copiando os arquivo(s) binarios do $(BinFolder) para o $(BuildFolder)" />
+        <Copy
+            SourceFiles="@(MySourceFiles)"
+            DestinationFolder="$(BuildFolder)"
+        />
+</Target>   
+<Target Name="ZipBuildPdb" Condition="'$(ZipNamePdb)'!='zipname'" >
+	<ItemGroup>
+		<ZipPdbSrcFiles Include="$(BuildFolder)\bin\*.pdb" />			
+	</ItemGroup>
+    <Message Text="Zipando os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipPdbSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipNamePdb).zip"/>
+    <Message Text="Excluindo os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+	<Delete Files="@(ZipPdbSrcFiles)" />
+</Target>
+<Target Name="ZipBuild" Condition="'$(BuildFolder)'!='buildfolder'" >
+	<ItemGroup>
+		<ZipSrcFiles Include="$(BuildFolder)\**\*.*" />			
+	</ItemGroup>
+    <Message Text="Zipando os arquivo(s) restantes do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipName).zip"/>
+</Target>
+</Project>
