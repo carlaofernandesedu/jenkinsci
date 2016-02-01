@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>ContageH</id>
+        <version>1.0.0.0</version>
+        <title>ContageH</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>ContageH versao 22122015</description>
+        <summary>ContageH versao inicial</summary>
+    </metadata>
+    <files>
+        <file src="lib\net45\ContageH.dll" target="lib\net45\ContageH.dll" />
+    </files>
+</package>
