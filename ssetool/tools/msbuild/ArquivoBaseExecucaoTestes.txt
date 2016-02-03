@@ -1,0 +1,14 @@
+BASE DE TESTE 
+Tipo LIB 
+c:\sse\work\jks\rootdlls\publish\sistema
+c:\sse\work\jks\rootdlls\source\sistema
+cd C:\Andre\devrepogit\prodesp\jenkinsci\ssetool\tools\msbuild
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=genericdao1
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=genericdao1
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=gennericdao1  /p:SelectFiles=todos
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=gennericdao1
+ZipBuild,WebDeploy,PackNuget
+
+Tipo Servico 
+

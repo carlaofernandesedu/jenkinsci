@@ -1,18 +1,3 @@
-BuildArtTypeLibPortal
-BuildArtTypeWebPortal
-BuildArtTypeWebService
-BuildArtTypeWinService
-
-<BinFolder  Condition="'$(BuildFolder)'==''">c:\sse\work\jks</BinFolder>
-<DestDeploy  Condition="'$(DestDeploy)'==''">c:\temp\webdeploy</DestDeploy>
-Ambiente
-Sistema 
-PathLibMSBuild
-PubFolder
-DropFolder
-ZipName  
-
-
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="ZipBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  >
 <PropertyGroup>
@@ -22,6 +7,7 @@ ZipName
 	<BuildFolder     Condition="'$(BuildFolder)'==''">buildfolder</BuildFolder>
 	<PathLibMSBuild  Condition="'$(PathMSBuild)'==''">c:\sse\tools\msbuild</PathLibMSBuild>
 	<BaseFolder      Condition="'$(BaseFolder)'==''">c:\sse\work\jks</BaseFolder>
+	<SelectFiles     Condition="'$(SelectFiles)'==''">projetos</SelectFiles>
 </PropertyGroup>
 <UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
 <UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Zip" />
@@ -66,10 +52,10 @@ ZipName
 	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
 </PropertyGroup>		  
 <Target Name="CopyBins" Condition="'$(SistemaValido)'!='0'" >
-		<ItemGroup>
+		<ItemGroup Condition="'$(SelectFiles)'=='todos'">
 			<MySourceFiles Include="$(BinFolder)\**\*.*"/>
 		</ItemGroup>
-		<ItemGroup>
+		<ItemGroup Condition="'$(SelectFiles)'!='todos'">
 			<MySourceFiles Include="$(BinFolder)\$(Sistema).*"/>
 		</ItemGroup>
 		<Message Text="Copiando os arquivo(s) binarios do $(BinFolder) para o $(BuildFolder)" />
@@ -78,6 +64,7 @@ ZipName
             DestinationFolder="$(BuildFolder)"
         />
 </Target>   
+<!--
 <Target Name="ZipBuildPdb" Condition="'$(ZipNamePdb)'!='zipname'" >
 	<ItemGroup>
 		<ZipPdbSrcFiles Include="$(BuildFolder)\bin\*.pdb" />			
@@ -93,5 +80,12 @@ ZipName
 	</ItemGroup>
     <Message Text="Zipando os arquivo(s) restantes do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
 	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipName).zip"/>
+</Target>
+-->
+<Target Name="ShowVar">
+    <Message Text="BINFOLDER: $(BinFolder)" />
+	<Message Text="NGFOLDER:  $(NgFolder)" />
+	<Message Text="ZIPNAMEPDB: $(ZipNamePdb)" />
+	<Message Text="BUILDFOLDER: $(BuildFolder)" />
 </Target>
 </Project>
