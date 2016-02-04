@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="ZipBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  >
+<Project ToolsVersion="3.5" DefaultTargets="CopyBins" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  >
 <PropertyGroup>
     <Sistema         Condition="'$(Sistema)'==''">sistema</Sistema>
 	<Ambiente        Condition="'$(Ambiente)'==''">ambiente</Ambiente>
 	<ZipName         Condition="'$(ZipName)'==''">zipname</ZipName>
 	<BuildFolder     Condition="'$(BuildFolder)'==''">buildfolder</BuildFolder>
-	<PathLibMSBuild  Condition="'$(PathMSBuild)'==''">c:\sse\tools\msbuild</PathLibMSBuild>
+	<PathLibMSBuild  Condition="'$(PathLibMSBuild)'==''">c:\sse\tools\msbuild</PathLibMSBuild>
 	<BaseFolder      Condition="'$(BaseFolder)'==''">c:\sse\work\jks</BaseFolder>
 	<SelectFiles     Condition="'$(SelectFiles)'==''">projetos</SelectFiles>
 </PropertyGroup>
@@ -64,28 +64,36 @@
             DestinationFolder="$(BuildFolder)"
         />
 </Target>   
-<!--
-<Target Name="ZipBuildPdb" Condition="'$(ZipNamePdb)'!='zipname'" >
+<Target Name="ZipBuildPdb" Condition="'$(ZipName)'!='zipname' and '$(SistemaValido)'!='0'" >
 	<ItemGroup>
-		<ZipPdbSrcFiles Include="$(BuildFolder)\bin\*.pdb" />			
+		<ZipPdbSrcFiles Include="$(BuildFolder)\**\*.pdb" />			
 	</ItemGroup>
     <Message Text="Zipando os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
 	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipPdbSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipNamePdb).zip"/>
     <Message Text="Excluindo os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
 	<Delete Files="@(ZipPdbSrcFiles)" />
 </Target>
-<Target Name="ZipBuild" Condition="'$(BuildFolder)'!='buildfolder'" >
+<Target Name="ZipBuild" Condition="'$(ZipName)'!='zipname' and '$(SistemaValido)'!='0'" >
 	<ItemGroup>
-		<ZipSrcFiles Include="$(BuildFolder)\**\*.*" />			
+		<ZipSrcFiles Include="$(BuildFolder)\**\*.*" Exclude="$(BuildFolder)\$(ZipNamePdb).zip;$(BuildFolder)\$(Sistema).nuspec;" />			
 	</ItemGroup>
     <Message Text="Zipando os arquivo(s) restantes do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
 	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipName).zip"/>
 </Target>
--->
+<Target Name="PackNuget" Condition="'$(SistemaValido)'!='0'" >
+       <Message Text="Gerando o arquivo de Pacote do Nuget os arquivo(s) binarios do $(BinFolder) para o $(BuildFolder)" />
+	   <ItemGroup>
+			<Command Include='C:\sse\tools\nuget\Nuget.exe pack $(NgFolder)\$(Sistema).nuspec -OutputDirectory "$(BuildFolder)"   -properties Configuration=Release' />
+		</ItemGroup>
+	   <Exec Command="%(Command.Identity)"/>
+</Target>   
+<!--
 <Target Name="ShowVar">
     <Message Text="BINFOLDER: $(BinFolder)" />
 	<Message Text="NGFOLDER:  $(NgFolder)" />
 	<Message Text="ZIPNAMEPDB: $(ZipNamePdb)" />
 	<Message Text="BUILDFOLDER: $(BuildFolder)" />
+	<Message Text="SELECTFILES: $(SelectFiles)" />
 </Target>
+-->
 </Project>

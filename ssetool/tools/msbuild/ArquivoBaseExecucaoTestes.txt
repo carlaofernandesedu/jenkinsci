@@ -3,9 +3,25 @@ Tipo LIB
 c:\sse\work\jks\rootdlls\publish\sistema
 c:\sse\work\jks\rootdlls\source\sistema
 cd C:\Andre\devrepogit\prodesp\jenkinsci\ssetool\tools\msbuild
+del C:\sse\work\jks\hom\rootdlls\publish\genericdao\*.* /q
+NEGATIVO
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=genericdao1
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=genericdao1
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=gennericdao1  /p:SelectFiles=todos
+POSITIVO
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=gennericdao  
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=gennericdao  /p:SelectFiles=todos
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=gennericdao  
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=gennericdao /p:SelectFiles=todos
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb,ZipBuild /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=gennericdao /p:SelectFiles=todos
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb,ZipBuild /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=gennericdao 
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb,ZipBuild,PackNuget /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=gennericdao 
+
+
 
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=gennericdao1
 ZipBuild,WebDeploy,PackNuget
