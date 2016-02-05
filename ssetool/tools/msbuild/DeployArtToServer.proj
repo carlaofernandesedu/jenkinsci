@@ -49,7 +49,7 @@
 <Choose>  
 	<When Condition = "'$(Hospd)'=='portalnet'" >
 		<PropertyGroup>
-			<DropFolder>$(BaseFolder)\$(AmbienteDir)\deployartlib\portalnet\drop</DropFolder>	
+			<DropFolder>$(BaseFolder)\$(AmbienteDir)\\portalnet\drop</DropFolder>	
 			<DestDeploy>d:\$(Ambiente)\portalnet</DestDeploy>	
 		</PropertyGroup>		
     </When>

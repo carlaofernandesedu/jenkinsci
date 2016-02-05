@@ -37,3 +37,4 @@ ZipBuild,WebDeploy,PackNuget
 
 Tipo Servico 
 
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,DeletePDB,ZipBuild,PackNuget,CopyToDeploy /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=genericdao

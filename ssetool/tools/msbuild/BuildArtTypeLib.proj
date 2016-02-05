@@ -49,8 +49,8 @@
     <BinFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
 	<BuildFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
 	<NgFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>	     			
-	<DropFolder>$(BaseFolder)\$(AmbienteDir)\deployartlib\portalnet\drop</DropFolder>	
-	<DropPdbFolder>$(BaseFolder)\$(AmbienteDir)\deployartlib\portalnet\pdbs</DropPdbFolder>
+	<DropFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\drop\$(Sistema)</DropFolder>	
+	<DropPdbFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\pdbs\$(Sistema)</DropPdbFolder>
 	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
 </PropertyGroup>		  
 <Target Name="CopyBins" Condition="'$(SistemaValido)'!='0'" >
