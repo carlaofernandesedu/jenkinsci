@@ -21,7 +21,15 @@ C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /
 
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb,ZipBuild,PackNuget /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=genericdao 
 
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,DeletePDB,ZipBuild,PackNuget,CopyToDeploy /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=genericdao
+
+
+FULL
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb,ZipBuild,PackNuget,CopyToDeploy /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=genericdao 
+
+FULL - COM DELEPDB
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ZipBuildPdb,DeletePDB,ZipBuild,PackNuget,CopyToDeploy /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=genericdao
 
 
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:CopyBins,ShowVar /p:Sistema=genericdao1 /p:Ambiente=homologacao1  /p:ZipName=gennericdao1
