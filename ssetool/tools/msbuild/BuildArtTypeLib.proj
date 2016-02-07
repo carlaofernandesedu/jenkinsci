@@ -4,9 +4,11 @@
     <Sistema         Condition="'$(Sistema)'==''">sistema</Sistema>
 	<Ambiente        Condition="'$(Ambiente)'==''">ambiente</Ambiente>
 	<ZipName         Condition="'$(ZipName)'==''">zipname</ZipName>
-	<BaseFolder      Condition="'$(BaseFolder)'==''">c:\sse\work\jks</BaseFolder>
+	<ServerBuild     Condition="'$(ServerBuild)'==''">jenkins</ServerBuild>
 	<PathLibMSBuild  Condition="'$(PathLibMSBuild)'==''">c:\sse\tools\msbuild</PathLibMSBuild>
 	<PathLibNuget    Condition="'$(PathLibNuget)'==''">c:\sse\tools\nuget</PathLibNuget>
+	<BinFolder></BinFolder>
+	<BuildFolder></BuildFolder>
 	<SelectFiles     Condition="'$(SelectFiles)'==''">projeto</SelectFiles>
 </PropertyGroup>
 <UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
@@ -18,9 +20,16 @@
 <UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.RoboCopy" />
 <UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Computer.WindowsService" />
 <PropertyGroup>
-     <AmbienteDir></AmbienteDir>
 	 <SistemaValido>0</SistemaValido>
-</PropertyGroup>
+     <AmbienteDir></AmbienteDir>
+</PropertyGroup>		  
+<Choose>
+	<When Condition = "'$(ServerBuild)'=='jenkins'" >
+		<PropertyGroup>
+			<BaseFolder>c:\sse\work\jks</BaseFolder>
+		</PropertyGroup>		
+    </When> 
+</Choose>
 <Choose>
 	<When Condition = "'$(Ambiente)'=='homologacao'" >
 		<PropertyGroup>
@@ -44,15 +53,15 @@
 	        <SistemaValido>1</SistemaValido>
 		</PropertyGroup>		
     </When>
-</Choose>  
+</Choose>
 <PropertyGroup>
-    <BinFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
-	<BuildFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
-	<NgFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>	     			
-	<DropFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\drop\$(Sistema)</DropFolder>	
-	<DropPdbFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\pdbs\$(Sistema)</DropPdbFolder>
+    <BinFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
+	<BuildFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
+	<NgFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>
+	<DropFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\deployapps\drop\$(Sistema)</DropFolder>	
+	<DropPdbFolder Condition="'$(ServerBuild)'=='jenkins'">$(BaseFolder)\$(AmbienteDir)\deployapps\pdbs\$(Sistema)</DropPdbFolder>
 	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
-</PropertyGroup>		  
+</PropertyGroup>  
 <Target Name="CopyBins" Condition="'$(SistemaValido)'!='0'" >
 		<ItemGroup Condition="'$(SelectFiles)'=='todos'">
 			<MySourceFiles Include="$(BinFolder)\**\*.*"/>
