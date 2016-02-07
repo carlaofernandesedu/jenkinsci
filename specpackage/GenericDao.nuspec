@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>GenericDao</id>
+        <version>2.0.0.4</version>
+        <title>GenericDao</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Inclusão de mecanismo de LOG</description>
+		<dependencies>
+  		  <dependency id="Nlog" version="4.2.3" />
+		</dependencies>		
+        <summary>Api Suporte Acesso a Dados Dependencias Oracle.DataAccess</summary>
+    </metadata>
+    <files>
+        <file src="bin\GenericDao.dll" target="lib\net45\GenericDao.dll" />
+    </files>
+</package>
