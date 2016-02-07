@@ -55,9 +55,9 @@
     </When>
 </Choose>
 <PropertyGroup>
-    <BinFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
+    <NgFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>
+	<BinFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
 	<BuildFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
-	<NgFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>
 	<DropFolder Condition="'$(ServerBuild)'=='jenkins'" >$(BaseFolder)\$(AmbienteDir)\deployapps\drop\$(Sistema)</DropFolder>	
 	<DropPdbFolder Condition="'$(ServerBuild)'=='jenkins'">$(BaseFolder)\$(AmbienteDir)\deployapps\pdbs\$(Sistema)</DropPdbFolder>
 	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
