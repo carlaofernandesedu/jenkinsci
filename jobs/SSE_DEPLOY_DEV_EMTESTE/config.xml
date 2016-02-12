@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Projeto de Deploy  para o servidor ambiente Teste - </description>
+  <displayName>SSE_DEPLOY_DEV_EMTESTE</displayName>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>Sistema</name>
+          <description>Nome do Sistema/Modulo que sera feito o deploy</description>
+          <defaultValue>naoinfromado</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TipoApp</name>
+          <description>Tipo de aplicacao para ser feito o deploy - webportal (para modulos do portalnet), libportal(para libs do portalnet), servicosweb(ws de integracao azure)</description>
+          <defaultValue>webportal</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>C:\sse\work\jks\hom\deployapps</customWorkspace>
+  <builders/>
+  <publishers/>
+  <buildWrappers/>
+</project>

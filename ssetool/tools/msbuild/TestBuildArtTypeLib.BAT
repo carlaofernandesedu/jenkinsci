@@ -1,11 +1,11 @@
 @ECHO OFF
 @ECHO realizando os testes no arquivo BuildArtTypeLib 
-cd d:\Andre\devrepogit\prodesp\jenkinsci\ssetool\tools\msbuild
-d:
+cd c:\Andre\devrepogit\prodesp\jenkinsci\ssetool\tools\msbuild
+c:
 @ECHO Excluindo arquivos publicados 
 del C:\sse\work\jks\hom\rootdlls\publish\genericdao\*.* /q /s
 rd  C:\sse\work\jks\hom\rootdlls\publish\genericdao\bin /s /q
-call :testpos4
+call :testpos5
 goto :fim
 
 :testnegativos
@@ -59,6 +59,13 @@ C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /
 dir C:\VSOAgent\_work\4\d\*.* /s
 PAUSE 
 GOTO :fim
+
+:testpos5
+@ECHO TESTE PARA PREPARACAO DO AMBIENTE
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe BuildArtTypeLib.proj /t:PrepAmbiente /p:Sistema=genericdao /p:Ambiente=homologacao /p:NameSln=genericdao
+call :verificar
+GOTO :fim
+
 
 :verificar
 dir C:\sse\work\jks\hom\rootdlls\publish\genericdao\*.* /s 
