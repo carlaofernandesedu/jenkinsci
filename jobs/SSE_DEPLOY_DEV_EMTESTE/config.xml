@@ -28,7 +28,16 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <customWorkspace>C:\sse\work\jks\hom\deployapps</customWorkspace>
-  <builders/>
+  <builders>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
+      <msBuildName>MSBUILD2013</msBuildName>
+      <msBuildFile>c:\sse\tools\msbuild\DeployArtToServer.proj</msBuildFile>
+      <cmdLineArgs>/t:Webdeploy /p:Sistema=genericdao /p:Ambiente=homologacao</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+  </builders>
   <publishers/>
   <buildWrappers/>
 </project>
