@@ -51,8 +51,8 @@
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>c:\sse\tools\msbuild\ZiparDll.proj</msBuildFile>
-      <cmdLineArgs>/t:CopyBins,ZipBuild,WebDeploy,PackNuget /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=genericdao</cmdLineArgs>
+      <msBuildFile>c:\sse\tools\msbuild\BuildArtTypeLib.proj</msBuildFile>
+      <cmdLineArgs>/t:CopyBins,DeletePdb,ZipBuild,PackNuget,CopytoDeploy /p:Sistema=genericdao /p:Ambiente=homologacao  /p:ZipName=genericdao</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>

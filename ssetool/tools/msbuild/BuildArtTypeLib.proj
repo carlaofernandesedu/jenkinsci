@@ -4,27 +4,23 @@
     <Sistema         Condition="'$(Sistema)'==''">sistema</Sistema>
 	<Ambiente        Condition="'$(Ambiente)'==''">ambiente</Ambiente>
 	<ZipName         Condition="'$(ZipName)'==''">zipname</ZipName>
-	<ServerBuild     Condition="'$(ServerBuild)'==''">jenkins</ServerBuild>
-	<BaseFolder>c:\sse\work\jks</BaseFolder>
-	<PathTools  Condition="'$(PathTools)'==''">c:\sse\tools</PathTools>
-	<BinFolder></BinFolder>
-	<BuildFolder></BuildFolder>
-	<NgFolder></NgFolder>
-	<NameSln></NameSln>
+	<BaseFolder      Condition="'$(BaseFolder)'==''">c:\sse\work\jks</BaseFolder>
+	<PathLibMSBuild  Condition="'$(PathLibMSBuild)'==''">c:\sse\tools\msbuild</PathLibMSBuild>
+	<PathLibNuget    Condition="'$(PathLibNuget)'==''">c:\sse\tools\nuget</PathLibNuget>
 	<SelectFiles     Condition="'$(SelectFiles)'==''">projeto</SelectFiles>
 </PropertyGroup>
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Zip" />
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Cab" />
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.DNZip" />
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.File" />
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.FindUnder" />
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.RoboCopy" />
-<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Computer.WindowsService" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Zip" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Cab" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.DNZip" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.File" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.FindUnder" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.RoboCopy" />
+<UsingTask AssemblyFile="$(PathLibMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Computer.WindowsService" />
 <PropertyGroup>
-	 <SistemaValido>0</SistemaValido>
      <AmbienteDir></AmbienteDir>
-</PropertyGroup>		  
+	 <SistemaValido>0</SistemaValido>
+</PropertyGroup>
 <Choose>
 	<When Condition = "'$(Ambiente)'=='homologacao'" >
 		<PropertyGroup>
@@ -48,35 +44,15 @@
 	        <SistemaValido>1</SistemaValido>
 		</PropertyGroup>		
     </When>
-</Choose>
-<Choose>
-	<When Condition = "'$(ServerBuild)'=='jenkins'" >
-		<PropertyGroup>
-			<NgFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>
-			<SlnFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</SlnFolder>
-			<BinFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
-			<BuildFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
-			<DropFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\drop\$(Sistema)</DropFolder>	
-			<DropPdbFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\pdbs\$(Sistema)</DropPdbFolder>
-		</PropertyGroup>		
-    </When> 
-</Choose>
+</Choose>  
 <PropertyGroup>
- 	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
-</PropertyGroup>  
-<Target Name="PrepAmbiente" Condition="'$(SistemaValido)'!='0'" >	
-		<ItemGroup>
-			<PrepFilesClean Include="$(BuildFolder)\**\*.*"/>
-			<PrepFolderClean Include="$([System.IO.Directory]::GetDirectories(&quot;$(BuildFolder)&quot;))"  />		
-		</ItemGroup>
-		 <Message Text="$(AmbienteDir)" />
-		 <Message Text="$(DirSln)" />
-		 <Message Text="Realizando a exclusao do arquivo  do local de publicacao $(BuildFolder) " />
-		 <Delete Files="@(PrepFilesClean)" />
-		 <RemoveDir Directories="@(PrepFolderClean)" />
-		 <Message Text="Realizando o restore dos arquivos via Nuget Restore a partir do local $(SlnFolder) "  />
-		 <Exec Command="$(PathTools)\msbuild\RestoreNuget.bat &quot;$(SlnFolder)&quot; " />
-</Target>
+    <BinFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)\bin</BinFolder>
+	<BuildFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\publish\$(Sistema)</BuildFolder>
+	<NgFolder>$(BaseFolder)\$(AmbienteDir)\rootdlls\source\$(Sistema)</NgFolder>	     			
+	<DropFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\drop\$(Sistema)</DropFolder>	
+	<DropPdbFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\pdbs\$(Sistema)</DropPdbFolder>
+	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
+</PropertyGroup>		  
 <Target Name="CopyBins" Condition="'$(SistemaValido)'!='0'" >
 		<ItemGroup Condition="'$(SelectFiles)'=='todos'">
 			<MySourceFiles Include="$(BinFolder)\**\*.*"/>
@@ -89,10 +65,6 @@
             SourceFiles="@(MySourceFiles)"
             DestinationFolder="$(BuildFolder)\bin"
         />
-		<ItemGroup>
-		    <FilesToClean Include="$(BuilFolder)\bin\**\*.*" />
-			<FoldersToClean Include="$([System.IO.Directory]::GetDirectories(&quot;$(BuildFolder)&quot;))"  />		
-		</ItemGroup>
 </Target>   
 <Target Name="ZipBuildPdb" Condition="'$(SistemaValido)'!='0'" >
 	<ItemGroup>
@@ -116,14 +88,11 @@
 	</ItemGroup>
     <Message Text="Zipando os arquivo(s) restantes do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
 	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipName).zip"/>
-    <Message Text="Excluindo os arquivo(s) temporarios do sistema $(Sistema) a partir do diretorio $(BuildBinFolder)" />
-	<Delete Files="@(FilesToClean)" />
-	<RemoveDir Directories="@(FoldersToClean)" />
 </Target>
 <Target Name="PackNuget" Condition="'$(SistemaValido)'!='0'" >
        <Message Text="Gerando o arquivo de Pacote do Nuget os arquivo(s) binarios a partir do $(NgFolder)\$(Sistema).nuspec" />
 	   <ItemGroup>
-			<Command Include='$(PathTools)\nuget\Nuget.exe pack $(NgFolder)\$(Sistema).nuspec -OutputDirectory "$(BuildFolder)"   -properties Configuration=Release' />
+			<Command Include='$(PathLibNuget)\Nuget.exe pack $(NgFolder)\$(Sistema).nuspec -OutputDirectory "$(BuildFolder)"   -properties Configuration=Release' />
 		</ItemGroup>
 	   <Exec Command="%(Command.Identity)"/>
 </Target>
