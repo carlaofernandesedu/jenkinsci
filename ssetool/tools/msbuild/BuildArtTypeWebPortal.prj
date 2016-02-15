@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="CopyBins" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  >
+<PropertyGroup>
+    <Sistema         Condition="'$(Sistema)'==''">sistema</Sistema>
+	<Ambiente        Condition="'$(Ambiente)'==''">ambiente</Ambiente>
+	<ZipName         Condition="'$(ZipName)'==''">zipname</ZipName>
+	<ServerBuild     Condition="'$(ServerBuild)'==''">jenkins</ServerBuild>
+	<BaseFolder>c:\sse\work\jks</BaseFolder>
+	<PathTools  Condition="'$(PathTools)'==''">c:\sse\tools</PathTools>
+	<BinFolder></BinFolder>
+	<BuildFolder></BuildFolder>
+	<NgFolder></NgFolder>
+	<NameSln></NameSln>
+	<SelectFiles     Condition="'$(SelectFiles)'==''">projeto</SelectFiles>
+</PropertyGroup>
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Zip" />
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Cab" />
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.DNZip" />
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.File" />
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.FindUnder" />
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.RoboCopy" />
+<UsingTask AssemblyFile="$(PathTools)\msbuild\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Computer.WindowsService" />
+<PropertyGroup>
+	 <SistemaValido>0</SistemaValido>
+     <AmbienteDir></AmbienteDir>
+</PropertyGroup>		  
+<Choose>
+	<When Condition = "'$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<AmbienteDir>hom</AmbienteDir>
+		</PropertyGroup>		
+    </When> 
+    <When Condition = "'$(Ambiente)'=='producao'" >
+		<PropertyGroup>
+			<AmbienteDir>prd</AmbienteDir>
+		</PropertyGroup>		
+    </When> 
+	<When Condition = "'$(Ambiente)'=='teste'" >
+		<PropertyGroup>
+			<AmbienteDir>dev</AmbienteDir>
+		</PropertyGroup>		
+    </When> 
+</Choose>
+<Choose>  
+	<When Condition = "'$(Sistema)'=='genericdao' and '$(AmbienteDir)'!=''" >
+		<PropertyGroup>
+	        <SistemaValido>1</SistemaValido>
+		</PropertyGroup>		
+    </When>
+</Choose>
+<Choose>
+	<When Condition = "'$(ServerBuild)'=='jenkins'" >
+		<PropertyGroup>
+			<NgFolder>$(BaseFolder)\$(AmbienteDir)\$(Sistema).Pages\source</NgFolder>
+			<SlnFolder>$(BaseFolder)\$(AmbienteDir)\$(Sistema).Pages\source</SlnFolder>
+			<BinFolder>$(BaseFolder)\$(AmbienteDir)\$(Sistema)source\bin</BinFolder>
+			<BuildFolder>$(BaseFolder)\$(AmbienteDir)\$(Sistema)\publish</BuildFolder>
+			<DropFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\drop\$(Sistema)</DropFolder>	
+			<DropPdbFolder>$(BaseFolder)\$(AmbienteDir)\deployapps\pdbs\$(Sistema)</DropPdbFolder>
+		</PropertyGroup>		
+    </When> 
+</Choose>
+<PropertyGroup>
+ 	<ZipNamePdb  Condition="'$(ZipName)'!='zipname'">PDB_$(ZipName)</ZipNamePdb>
+</PropertyGroup>  
+<Target Name="PrepAmbiente" Condition="'$(SistemaValido)'!='0'" >	
+		<ItemGroup>
+			<PrepFilesClean Include="$(BuildFolder)\**\*.*"/>
+			<PrepFolderClean Include="$([System.IO.Directory]::GetDirectories(&quot;$(BuildFolder)&quot;))"  />		
+		</ItemGroup>
+		 <Message Text="$(AmbienteDir)" />
+		 <Message Text="$(DirSln)" />
+		 <Message Text="Realizando a exclusao do arquivo  do local de publicacao $(BuildFolder) " />
+		 <Delete Files="@(PrepFilesClean)" />
+		 <RemoveDir Directories="@(PrepFolderClean)" />
+		 <Message Text="Realizando o restore dos arquivos via Nuget Restore a partir do local $(SlnFolder) "  />
+		 <Exec Command="$(PathTools)\msbuild\RestoreNuget.bat &quot;$(SlnFolder)&quot; " />
+</Target>
+<Target Name="MovePages" Condition="'$(SistemaValido)'!='0'" >	
+		<ItemGroup Condition="'$(SelectFiles)'!='todos'">
+			<MyBinFiles  Include="$(BuildFolder)\*.*" Exclude="$(BuildFolder)\$(Sistema).dll;$(BuildFolder)\$(Sistema).Pages.dll"/>
+		</ItemGroup>
+		<Message Text="Excluindo os arquivo(s) binarios do $(BuildFolder) dependendo da configuracao" />
+        <Delete Files="@(MyBinFiles)" Condition="'$(SelectFiles)'!='todos'" />
+		 <MSBuild.ExtensionPack.FileSystem.FindUnder TaskAction="FindFiles" Path="$(BuildFolder)">
+            <Output ItemName="AllFoundItems" TaskParameter="FoundItems"/>
+        </MSBuild.ExtensionPack.FileSystem.FindUnder>
+		<ItemGroup>
+			<Buildfiles Include="@(AllFoundItems)"  Exclude="$(BuildFolder)\bin\*.*" />
+		</ItemGroup> 
+		<Message Text="Realizando a copia do arquivo @(Buildfiles) para a pasta $(BuildFolder)\paginas\$(Sistema).pages" Condition="Exists('%(Buildfiles.Identity)')" /> 
+		 <Copy
+            SourceFiles="@(Buildfiles)"
+            DestinationFiles="@(Buildfiles->Replace('$(BuildFolder)','$(BuildFolder)\paginas\$(Sistema).pages'))"
+			Condition="Exists('%(Buildfiles.Identity)')"
+        />
+		<ItemGroup>
+			<FilesOldToClean Include="@(AllFoundItems)"  Exclude="$(BuildFolder)\bin\*.*" />
+			<FoldersOldToClean Include="$([System.IO.Directory]::GetDirectories(&quot;$(BuildFolder)&quot;))" Exclude="$(BuildFolder)\bin;$(BuildFolder)\paginas" />		
+		</ItemGroup>		
+		<Message Text="Realizando a exclusao do(s) arquivo(s) antigos do local $(BuildFolder)" Condition="Exists('%(FilesOldToClean.Identity)')" />
+		<Delete Files="@(FilesOldToClean)"/>
+        <RemoveDir Directories="@(FoldersOldToClean)" />
+		<ItemGroup>
+			<FilesToClean Include="$(BuilFolder)\**\*.*" />
+			<FoldersToClean Include="$([System.IO.Directory]::GetDirectories(&quot;$(BuildFolder)&quot;))"  />		
+		</ItemGroup>
+</Target>   
+<Target Name="ZipBuildPdb" Condition="'$(SistemaValido)'!='0'" >
+	<ItemGroup>
+		<ZipPdbSrcFiles Include="$(BuildFolder)\**\*.pdb" />			
+	</ItemGroup>
+    <Message Text="Zipando os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipPdbSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipNamePdb).zip"/>
+    <Message Text="Excluindo os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+	<Delete Files="@(ZipPdbSrcFiles)" />
+</Target>
+<Target Name="DeletePdb" Condition="'$(SistemaValido)'!='0'" >
+    <ItemGroup>
+		<PdbSrcFiles Include="$(BuildFolder)\**\*.pdb" />			
+	</ItemGroup>
+	<Message Text="Excluindo os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+	<Delete Files="@(PdbSrcFiles)" />
+</Target>
+<Target Name="ZipBuild" Condition="'$(ZipName)'!='zipname' and '$(SistemaValido)'!='0'" >
+	<ItemGroup>
+		<ZipSrcFiles Include="$(BuildFolder)\**\*.*" Exclude="$(BuildFolder)\$(ZipNamePdb).zip;$(BuildFolder)\$(Sistema).nuspec;" />			
+	</ItemGroup>
+    <Message Text="Zipando os arquivo(s) restantes do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipName).zip"/>
+    <Message Text="Excluindo os arquivo(s) temporarios do sistema $(Sistema) a partir do diretorio $(BuildBinFolder)" />
+	<Delete Files="@(FilesToClean)" />
+	<RemoveDir Directories="@(FoldersToClean)" />
+</Target>
+<Target Name="PackNuget" Condition="'$(SistemaValido)'!='0'" >
+       <Message Text="Gerando o arquivo de Pacote do Nuget os arquivo(s) binarios a partir do $(NgFolder)\$(Sistema).nuspec" />
+	   <ItemGroup>
+			<Command Include='$(PathTools)\nuget\Nuget.exe pack $(NgFolder)\$(Sistema).nuspec -OutputDirectory "$(BuildFolder)"   -properties Configuration=Release' />
+		</ItemGroup>
+	   <Exec Command="%(Command.Identity)"/>
+</Target>
+<Target Name="CopyToDeploy" Condition="'$(SistemaValido)'!='0'" >
+		<ItemGroup>
+			<MyBuildFiles Include="$(BuildFolder)\*.*" Exclude="$(BuildFolder)\$(ZipNamePdb).zip" />
+		</ItemGroup>
+		<Message Text="Copiando os arquivo(s) do $(BuildFolder) para o $(DropFolder)" />
+        <Copy
+            SourceFiles="@(MyBuildFiles)"
+            DestinationFolder="$(DropFolder)"
+        />
+		<ItemGroup>
+			<MyPdbBuildFiles Include="$(BuildFolder)\$(ZipNamePdb).zip" />
+		</ItemGroup>
+		<Message Text="Copiando os arquivo(s) pdbs do $(BuildFolder) para o $(DropPdbFolder)" />
+        <Copy
+            SourceFiles="@(MyPdbBuildFiles)"
+            DestinationFolder="$(DropPdbFolder)"
+			Condition="Exists('%(FullPath)')"
+        />
+</Target>      
+<Target Name="ShowVar">
+    <Message Text="BINFOLDER: $(BinFolder)" />
+	<Message Text="NGFOLDER:  $(NgFolder)" />
+	<Message Text="ZIPNAMEPDB: $(ZipNamePdb)" />
+	<Message Text="BUILDFOLDER: $(BuildFolder)" />
+	<Message Text="SELECTFILES: $(SelectFiles)" />
+	<Message Text="DROPFOLDER: $(DropFolder)" />
+</Target>
+</Project>
