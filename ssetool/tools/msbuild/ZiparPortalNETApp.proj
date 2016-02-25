@@ -122,6 +122,13 @@
 			<DestDeploy>d:\teste\controleos</DestDeploy>
 		</PropertyGroup>		
 	</When>
+	<When Condition = "'$(Sistema)'=='roe' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\roe\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\homologacao\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
   </Choose>
 <Target Name="DeployPages" Condition="'$(BuildFolder)'!='c:\sse\work\jks'" >	
 		 <MSBuild.ExtensionPack.FileSystem.FindUnder TaskAction="FindFiles" Path="$(BuildFolder)">

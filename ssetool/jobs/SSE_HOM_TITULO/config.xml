@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>SSE_HOM_TITULO</description>
+  <displayName>SSE_HOM_TITULO</displayName>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.5">
+    <scms>
+      <hudson.plugins.git.GitSCM plugin="git@2.4.0">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/_git/Titulo</url>
+            <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+          <hudson.plugins.git.BranchSpec>
+            <name>*/master</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions>
+          <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+            <relativeTargetDir>source/titulo</relativeTargetDir>
+          </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        </extensions>
+      </hudson.plugins.git.GitSCM>
+      <hudson.plugins.git.GitSCM plugin="git@2.4.0">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/titulo/_git/titulo.Pages</url>
+            <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+          <hudson.plugins.git.BranchSpec>
+            <name>*/master</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions>
+          <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+            <relativeTargetDir>source/titulo.pages</relativeTargetDir>
+          </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        </extensions>
+      </hudson.plugins.git.GitSCM>
+    </scms>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>C:\sse\work\jks\hom\titulo</customWorkspace>
+  <builders>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
+      <msBuildName>MSBUILD2013</msBuildName>
+      <msBuildFile>c:\sse\tools\msbuild\PrepAmbiente.proj</msBuildFile>
+      <cmdLineArgs>/t:PrepAmbiente  /p:Sistema=titulo /p:Ambiente=homologacao /p:DirSln=titulo.pages</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
+      <msBuildName>MSBUILD2013</msBuildName>
+      <msBuildFile>c:\sse\work\jks\hom\titulo\source\titulo.pages\titulo.pages.sln</msBuildFile>
+      <cmdLineArgs>/p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=homologacao</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
+      <msBuildName>MSBUILD2013</msBuildName>
+      <msBuildFile>c:\sse\tools\msbuild\ZiparPortalNETApp.proj</msBuildFile>
+      <cmdLineArgs>/t:Webdeploy  /p:Sistema=titulo /p:Ambiente=homologacao  /p:ZipName=titulo</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
