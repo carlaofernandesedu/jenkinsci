@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SeducOracle.DataAccess</id>
+        <version>4.112.3.0</version>
+        <title>Oracle.DataAccess</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Client do Oracle para uso nas APIs de acesso a dados</description>
+        <summary>Client do Oracle para uso nas APIs de acesso a dados</summary>
+    </metadata>
+    <files>
+        <file src="lib\net45\Oracle.DataAccess.dll" target="odp.net.x64.112.3.20\lib\net40\Oracle.DataAccess.dll" />
+    </files>
+</package>
