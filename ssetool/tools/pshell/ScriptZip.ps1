@@ -6,8 +6,8 @@ Param(
    [Parameter(Mandatory=$True,Position=1,HelpMessage="nome do app que ser usado com nome do arquivo zip")]
    [string]$appname,
 
-   [Parameter(Mandatory=$True,Position=2,HelpMessage="arquivos das pasta que serao enviados")]
-   [string()]$keepbinfiles,
+   [Parameter(Mandatory=$True,Position=2,HelpMessage="arquivos array das pasta bin que serao enviados")]
+   [string[]]$keepbinfiles,
 
    [Parameter(Mandatory=$False,Position=3,HelpMessage="informacao de path adicional de publicacao")]
    [string]$publishfolder
@@ -45,7 +45,7 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
         $FolderBINExclusao = $PubRootFolder + '\bin'
         Compress-ZIPFile $FolderBINExclusao $ZipFile
         #Remover os arquivos desnecessários
-        <#
+        
             Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
             { 
                 if($ZipFile -ne $ItemRootExclusao.FullName)
@@ -59,7 +59,7 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
                 Write-Host 'Removendo o diretorio' $ItemRootExclusao.FullName
                 Remove-Item $ItemRootExclusao.FullName -Recurse 
             }
-        #>
+        
     }
     else 
     {
