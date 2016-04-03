@@ -6,10 +6,13 @@ Param(
    [Parameter(Mandatory=$True,Position=1,HelpMessage="nome do app que ser usado com nome do arquivo zip")]
    [string]$appname,
 
-   [Parameter(Mandatory=$True,Position=2,HelpMessage="arquivos array das pasta bin que serao enviados")]
+   [Parameter(Mandatory=$True,Position=2,HelpMessage="tipo de app opcoes lib,web ou webportal")]
+   [string]$apptype,
+
+   [Parameter(Mandatory=$True,Position=3,HelpMessage="arquivos array das pasta bin que serao enviados")]
    [string[]]$keepbinfiles,
 
-   [Parameter(Mandatory=$False,Position=3,HelpMessage="informacao de path adicional de publicacao")]
+   [Parameter(Mandatory=$False,Position=4,HelpMessage="informacao de path adicional de publicacao")]
    [string]$publishfolder
 )
 
@@ -22,6 +25,7 @@ if ($publishfolder.Length -gt 0)
 Write-host 'source:' $sourcerootfolder
 Write-host 'publish:' $publishrootfolder
 Write-host 'aplicacao:' $appname
+Write-host 'aplicacao:' $apptype
 Write-host 'keppbinfiles:' $keepbinfiles
 
 ZIP-AppLib $sourcerootfolder $publishrootfolder $appname $keepbinfiles

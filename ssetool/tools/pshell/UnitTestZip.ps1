@@ -1,6 +1,14 @@
 ﻿#Script para execucao de testes unitarios 
-#LIB - Caso Teste Negativo ZIP-AppLib arquivos selecionados
+#LIB - Caso Teste Negativo Script sem caminho codigo fonte
 C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 
+#LIB - Caso Teste Negativo Script sem nome da applicacao
+C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 'c:\pst\origem\bin'  
+#LIB - Caso Teste Negativo Script sem tipo do app 
+C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 'c:\pst\origem\bin' 'sistema'
+#LIB - Caso Teste Negativo Script sem arquivo informado 
+C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 'c:\pst\origem\bin' 'sistema' 'lib'
+
+
 #LIB - Caso 1 Teste Sucesso ZIP-AppLib arquivos selecionados
 clear
 remove-item c:\pst -Force -Recurse
@@ -12,7 +20,7 @@ new-item 'c:\pst\origem\bin\lib1.txt' -Value 'lib1'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\modulo.txt' -Value 'modulo'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib3.txt' -Value 'lib3'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib4.txt' -Value 'lib4'  -ItemType file -Force
-C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 "c:\pst\origem\bin" "sistema" "modulo.txt"
+C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 "c:\pst\origem\bin" "sistema" "lib" "modulo.txt"
 
 
 #LIB - Caso 2 Teste Sucesso ZIP-AppLib arquivos selecionados + de um arquivo
@@ -27,7 +35,7 @@ new-item 'c:\pst\origem\bin\modulo.txt' -Value 'modulo'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib3.txt' -Value 'lib3'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib4.txt' -Value 'lib4'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\arq1.log' -Value 'arq1'  -ItemType file -Force
-C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 "c:\pst\origem\bin" "sistema" @('modulo.txt','lib1.txt')
+C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 "c:\pst\origem\bin" "sistema" "lib" @('modulo.txt','lib1.txt')
 
 
 #LIB - Caso 3 Teste Sucesso ZIP-AppLib arquivos selecionados *.txt
@@ -42,7 +50,7 @@ new-item 'c:\pst\origem\bin\modulo.txt' -Value 'modulo'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib3.txt' -Value 'lib3'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib4.txt' -Value 'lib4'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\arq1.log' -Value 'arq1'  -ItemType file -Force
-C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 "c:\pst\origem\bin" "sistema" @('*.txt')
+C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 "c:\pst\origem\bin" "sistema" "lib" @('*.txt')
 
 
 #LIB - Caso 4 Teste Sucesso ZIP-AppLib arquivos selecionados *.*
