@@ -3,7 +3,7 @@ Param(
    [Parameter(Mandatory=$True,Position=0,HelpMessage="caminho do codigo fonte")]
    [string]$sourcerootfolder,
    
-   [Parameter(Mandatory=$True,Position=1,HelpMessage="nome do app que ser usado com nome do arquivo zip")]
+   [Parameter(Mandatory=$True,Position=1,HelpMessage="nome do modulo usado para compor a pasta de publicacao e arquivo zip")]
    [string]$appname,
 
    [Parameter(Mandatory=$True,Position=2,HelpMessage="arquivos array das pasta bin que serao enviados")]
@@ -11,14 +11,16 @@ Param(
 
 )
 
+
 $publishrootfolder = 'c:\pst\destino'
+#$publishrootfolder = 'c:\sse\work\jks\dev\' + $appname  +  '\drop'
+#$publishrootfolder = 'c:\sse\work\jks\dev\genericdao\drop'
+
 
 Write-host 'source:' $sourcerootfolder
 Write-host 'publish:' $publishrootfolder
 Write-host 'aplicacao:' $appname
 Write-host 'keppbinfiles:' $keepbinfiles
-
-ZIP-AppLib $sourcerootfolder $publishrootfolder $appname $keepbinfiles
 
 
 function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
@@ -180,4 +182,4 @@ function Compress-ZIPFile($FolderToZip, $PathFileZip)
 }
 
 
-
+ZIP-AppLib $sourcerootfolder $publishrootfolder $appname $keepbinfiles
