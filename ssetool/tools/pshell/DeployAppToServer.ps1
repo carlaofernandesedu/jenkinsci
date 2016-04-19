@@ -33,9 +33,10 @@ try
         "-enableRule:DoNotDeleteRule")
     
     Write-Host $InstallPath $arguments
-    #Start-Process $InstallPath -ArgumentList $arguments -NoNewWindow -Wait
+    $process = Start-Process $InstallPath -ArgumentList $arguments -NoNewWindow -PassThru -Wait
+    exit $process.ExitCode 
     #& $InstallPath $arguments 
-    exit 0 
+    #exit 0
 }
 catch [Exception]
     {
