@@ -45,7 +45,7 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
             $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
             Write-Host 'Gerando o arquivo ZIP' $ZipFile
             $FolderBINExclusao = $PubRootFolder + '\bin'
-            Compress-ZIPFile $PubRootFolder $ZipFile
+            Compress-ZIPFile $FolderBINExclusao $ZipFile
             #Remover os arquivos desnecessários
         
                 Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
@@ -178,7 +178,7 @@ function Extract-ZIPFile($SourceFolderZip, $DestFolderZip)
 function Compress-ZIPFile($FolderToZip, $PathFileZip)
 {
     Add-Type -AssemblyName "system.io.compression.filesystem"
-    [io.compression.zipfile]::CreateFromDirectory($FolderToZip, $PathFileZip) 
+    [io.compression.zipfile]::CreateFromDirectory($FolderToZip, $PathFileZip, "optimal", $True) 
 }
 
 

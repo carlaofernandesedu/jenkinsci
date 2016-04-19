@@ -53,7 +53,7 @@ $Pwd = "Desp@2015"
 $InstallMS = "C:\vsoagent\tools\msdeploy"
 $SistemaValido = $false 
 
-$Source = "c:\sse\work\jks\release\drop\" + ($Sistema)  +  ".zip"
+$Source = "c:\sse\work\jks\release\" + ($Sistema)  +  "\drop\"  + ($Sistema)  +  ".zip"
 
 if($Sistema -eq "genericdao")
 {
