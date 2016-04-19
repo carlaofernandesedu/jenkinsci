@@ -45,7 +45,7 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
             $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
             Write-Host 'Gerando o arquivo ZIP' $ZipFile
             $FolderBINExclusao = $PubRootFolder + '\bin'
-            Compress-ZIPFile $FolderBINExclusao $ZipFile
+            Compress-ZIPFile $PubRootFolder $ZipFile
             #Remover os arquivos desnecessários
         
                 Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
@@ -183,3 +183,6 @@ function Compress-ZIPFile($FolderToZip, $PathFileZip)
 
 
 ZIP-AppLib $sourcerootfolder $publishrootfolder $appname $keepbinfiles
+
+
+
