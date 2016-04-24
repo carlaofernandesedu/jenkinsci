@@ -38,14 +38,14 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
             Write-Host 'Copiando arquivos de' $SourceFolder 'para' $PubRootFolder
             Copy-Item $SourceFolder $PubRootFolder -Force -Recurse
             #Verificar restrição de arquivos definidos para o pacote 
-            $FolderBINExclusao = $PubRootFolder + '\bin\*.*'
+            $FolderBIN = $PubRootFolder + '\bin'
+            $FolderBINExclusao = $FolderBin + '\*.*'
             Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
             Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
             #Gerar o arquivo zip 
             $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
             Write-Host 'Gerando o arquivo ZIP' $ZipFile
-            $FolderBINExclusao = $PubRootFolder + '\bin'
-            Compress-ZIPFile $FolderBINExclusao $ZipFile
+            Compress-ZIPFile $FolderBIN $ZipFile $True 
             #Remover os arquivos desnecessários
         
                 Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
@@ -79,40 +79,51 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
     }      
 }
 
+
 function ZIP-AppWeb($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
 {
     try 
     {
-        #Apagar dados gerados de geracao anterior 
-        $FilesPubRootFolder = $PubRootFolder + '\*.*'
-        Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
-        #Copiar os arquivos gerados na pasta source
-        $PubStageFolder = $PubRootFolder + '\stage'
-        Write-Host 'Copiando arquivos de' $SourceFolder 'para' $PubStageFolder
-        Copy-Item $SourceFolder $PubStageFolder -Recurse
-        #Verificar restrição de arquivos definidos para o pacote 
-        $FolderBINExclusao = $PubStageFolder + '\bin\*.*'
-        Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
-        Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
-        #Gerar o arquivo zip 
-        $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
-        Write-Host 'Gerando o arquivo ZIP' $ZipFile
-        Compress-ZIPFile $PubStageFolder $ZipFile
-        #Remover os arquivos desnecessários
-            Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
-            { 
-                if($ZipFile -ne $ItemRootExclusao.FullName)
-                {
-                    Write-Host 'Removendo o arquivo' $ItemRootExclusao.FullName
-                    Remove-Item $ItemRootExclusao.FullName 
+        #Verificando a pasta de publicacao
+        if(Test-Path $PubRootFolder)
+        {
+            #Apagar dados gerados de geracao anterior 
+            $FilesPubRootFolder = $PubRootFolder + '\*.*'
+            Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
+            Remove-Item $FilesPubRootFolder 
+            $FolderApp = $PubRootFolder + '\apptemp'           
+            #Verificar restrição de arquivos definidos para o pacote 
+            $FolderBINExclusao = $FolderApp + '\bin\*.*'
+            Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
+            Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
+            #Gerar o arquivo zip 
+            $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
+            Write-Host 'Gerando o arquivo ZIP' $ZipFile
+            Compress-ZIPFile $FolderApp $ZipFile $False
+            #Remover os arquivos desnecessários
+        
+                Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
+                { 
+                    if($ZipFile -ne $ItemRootExclusao.FullName)
+                    {
+                        Write-Host 'Removendo o arquivo' $ItemRootExclusao.FullName
+                        Remove-Item $ItemRootExclusao.FullName 
+                    }
                 }
-            }
-            Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Directory))
-            { 
-                Write-Host 'Removendo o diretorio' $ItemRootExclusao.FullName
-                Remove-Item $ItemRootExclusao.FullName -Recurse 
-            }
-            exit 0 
+                Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Directory))
+                { 
+                    Write-Host 'Removendo o diretorio' $ItemRootExclusao.FullName
+                    Remove-Item $ItemRootExclusao.FullName -Recurse 
+                }
+                exit 0         
+        }
+        else 
+        {
+          Write-Host 'Caminho de publicacao informado incorretamente' $PubRootFolder
+          exit 1
+          return  
+        }
+
     }
     catch [Exception]
     {
@@ -120,46 +131,59 @@ function ZIP-AppWeb($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
         exit 1 
         return 
     }      
-    
 }
 
-function ZIP-AppModuloNet()
+
+
+function ZIP-AppModuloNet($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
 {
     try 
     {
-        #Apagar dados gerados de geracao anterior 
-        $FilesPubRootFolder = $PubRootFolder + '\*.*'
-        Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
-        $FolderNet =  $PubRootFolder + '\paginas\' + $Modulo + '.Pages'
-        $SourceBinFolder = $PubRootFolder + '\paginas\bin' 
-        #Criar as pastas paginas/<Modulo>.Pages e bin
-        Write-Host 'Criando a pasta' $FolderNet
-        New-Item $FolderNet -ItemType directory -Force 
-        #Copiar os arquivos binarios gerados no pasta \paginas\bin
-        Copy-Item $SourceBinFolder $PubRootFolder -Force 
-        #Verificar restrição de arquivos definidos para o pacote 
-        $FolderBINExclusao = $PubRootFolder + '\bin\*.*'
-        Write-Host 'Excluir os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
-        Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
-        #Gerar o arquivo zip 
-        $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
-        Write-Host 'Gerando o arquivo ZIP' $ZipFile
-        New-Item $ZipFile -ItemType File -Force 
-        #Remover os arquivos desnecessários
-            Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
-            { 
-                if($ZipFile -ne $ItemRootExclusao.FullName)
-                {
-                    Write-Host 'Removendo o arquivo' $ItemRootExclusao.FullName
-                    Remove-Item $ItemRootExclusao.FullName 
+        #Verificando a pasta de publicacao
+        if(Test-Path $PubRootFolder)
+        {
+            #Apagar dados gerados de geracao anterior 
+            $FilesPubRootFolder = $PubRootFolder + '\*.*'
+            Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
+            Remove-Item $FilesPubRootFolder 
+            $FolderNet = $PubRootFolder + '\portalnet'           
+            $FolderBinNetPages =  $FolderNet + '\paginas\' + $Sistema + '.Pages\bin'
+            #Movendo a pasta bin para a pasta portalnet 
+            Write-Host "Movendo a pasta bin para o diretorio base"
+            Move-Item $FolderBinNetPages $FolderNet 
+            #Verificar restrição de arquivos definidos para o pacote 
+            $FolderBINExclusao = $FolderNet + '\bin\*.*'
+            Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
+            Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
+            #Gerar o arquivo zip 
+            $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
+            Write-Host 'Gerando o arquivo ZIP' $ZipFile
+            $FolderBINExclusao = $PubRootFolder + '\bin'
+            Compress-ZIPFile $FolderNet $ZipFile $False
+            #Remover os arquivos desnecessários
+        
+                Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
+                { 
+                    if($ZipFile -ne $ItemRootExclusao.FullName)
+                    {
+                        Write-Host 'Removendo o arquivo' $ItemRootExclusao.FullName
+                        Remove-Item $ItemRootExclusao.FullName 
+                    }
                 }
-            }
-            Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Directory))
-            { 
-                Write-Host 'Removendo o diretorio' $ItemRootExclusao.FullName
-                Remove-Item $ItemRootExclusao.FullName -Recurse 
-            }
-            exit 0 
+                Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Directory))
+                { 
+                    Write-Host 'Removendo o diretorio' $ItemRootExclusao.FullName
+                    Remove-Item $ItemRootExclusao.FullName -Recurse 
+                }
+                exit 0         
+        }
+        else 
+        {
+          Write-Host 'Caminho de publicacao informado incorretamente' $PubRootFolder
+          exit 1
+          return  
+        }
+
     }
     catch [Exception]
     {
@@ -167,18 +191,20 @@ function ZIP-AppModuloNet()
         exit 1 
         return 
     }      
-
 }
+
+
+
 
 function Extract-ZIPFile($SourceFolderZip, $DestFolderZip)
 {
     Add-Type -AssemblyName "system.io.compression.filesystem"
     [io.compression.zipfile]::ExtractToDirectory((Get-ChildItem $SourceFolderZip)[0].FullName, $DestFolderZip) 
 }
-function Compress-ZIPFile($FolderToZip, $PathFileZip)
+function Compress-ZIPFile($FolderToZip, $PathFileZip,$IncluirDir)
 {
     Add-Type -AssemblyName "system.io.compression.filesystem"
-    [io.compression.zipfile]::CreateFromDirectory($FolderToZip, $PathFileZip, "optimal", $True) 
+    [io.compression.zipfile]::CreateFromDirectory($FolderToZip, $PathFileZip, "optimal", $IncluirDir) 
 }
 
 
