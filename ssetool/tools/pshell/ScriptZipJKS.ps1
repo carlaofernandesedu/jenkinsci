@@ -6,7 +6,10 @@ Param(
    [Parameter(Mandatory=$True,Position=1,HelpMessage="nome do modulo usado para compor a pasta de publicacao e arquivo zip")]
    [string]$appname,
 
-   [Parameter(Mandatory=$True,Position=2,HelpMessage="arquivos array das pasta bin que serao enviados")]
+   [Parameter(Mandatory=$True,Position=2,HelpMessage="tipo de deploy (lib, appweb ou appnet ")]
+   [string]$typeapp,
+
+   [Parameter(Mandatory=$True,Position=3,HelpMessage="arquivos array das pasta bin que serao enviados")]
    [string[]]$keepbinfiles
 
 )
@@ -20,6 +23,7 @@ $publishrootfolder = 'c:\pst\destino'
 Write-host 'source:' $sourcerootfolder
 Write-host 'publish:' $publishrootfolder
 Write-host 'aplicacao:' $appname
+Write-host 'tipoaplicacao:' $typeapp
 Write-host 'keppbinfiles:' $keepbinfiles
 
 
@@ -91,7 +95,7 @@ function ZIP-AppWeb($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
             $FilesPubRootFolder = $PubRootFolder + '\*.*'
             Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
             Remove-Item $FilesPubRootFolder 
-            $FolderApp = $PubRootFolder + '\apptemp'           
+            $FolderApp = $SourceFolder           
             #Verificar restrição de arquivos definidos para o pacote 
             $FolderBINExclusao = $FolderApp + '\bin\*.*'
             Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
@@ -146,10 +150,10 @@ function ZIP-AppModuloNet($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
             $FilesPubRootFolder = $PubRootFolder + '\*.*'
             Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
             Remove-Item $FilesPubRootFolder 
-            $FolderNet = $PubRootFolder + '\portalnet'           
-            $FolderBinNetPages =  $FolderNet + '\paginas\' + $Sistema + '.Pages\bin'
+            $FolderNet = $PubRootFolder + '\portalnet'
+            $FolderBinNetPages = $SourceFolder +  '\bin'
             #Movendo a pasta bin para a pasta portalnet 
-            Write-Host "Movendo a pasta bin para o diretorio base"
+            Write-Host "Movendo a pasta bin" ($FolderBinNetPages) "para o diretorio " ($FolderNet)
             Move-Item $FolderBinNetPages $FolderNet 
             #Verificar restrição de arquivos definidos para o pacote 
             $FolderBINExclusao = $FolderNet + '\bin\*.*'
@@ -208,7 +212,20 @@ function Compress-ZIPFile($FolderToZip, $PathFileZip,$IncluirDir)
 }
 
 
-ZIP-AppLib $sourcerootfolder $publishrootfolder $appname $keepbinfiles
-
-
-
+if ($typeapp -eq "lib")
+{
+    ZIP-AppLib $sourcerootfolder $publishrootfolder $appname $keepbinfiles
+}
+elseif ($typeapp -eq "appweb")
+{
+    ZIP-AppWeb $sourcerootfolder $publishrootfolder $appname $keepbinfiles
+}
+elseif ($typeapp -eq "appnet")
+{
+    ZIP-AppModuloNet $sourcerootfolder $publishrootfolder $appname $keepbinfiles
+}
+else
+{
+  Write-Host "Tipo de Aplicacao nao implementada:" ($typeapp)
+  exit 1 
+}
