@@ -20,7 +20,10 @@ new-item 'c:\pst\origem\bin\lib1.txt' -Value 'lib1'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\modulo.txt' -Value 'modulo'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib3.txt' -Value 'lib3'  -ItemType file -Force
 new-item 'c:\pst\origem\bin\lib4.txt' -Value 'lib4'  -ItemType file -Force
+
 C:\andre\devrepogit\github\jenkinsci\ssetool\tools\pshell\ScriptZip.ps1 "c:\pst\origem\bin" "sistema" "lib" "modulo.txt"
+
+
 
 
 #LIB - Caso 2 Teste Sucesso ZIP-AppLib arquivos selecionados + de um arquivo
