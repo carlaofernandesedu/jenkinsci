@@ -2,8 +2,7 @@
 <project>
   <actions/>
   <description>Biblioteca GENERIC DAO - Realizar procedimentos de build e criacao de artefatos &#xd;
-binarios e biblioteca nuget</description>
-  <displayName>SSE_BUILD_LIB_GENERICDAO</displayName>
+binarios e biblioteca nuget - RELEASE -  a partir do branch MASTER</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.4">
@@ -33,7 +32,7 @@ binarios e biblioteca nuget</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\dev\genericdao</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\genericdao</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
       <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\GenericDao\GenericDao.sln&quot;  </command>
@@ -47,7 +46,7 @@ binarios e biblioteca nuget</description>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKS.ps1 &quot;%WORKSPACE%\source\GenericDao\bin&quot; &quot;genericdao&quot; &quot;genericdao.dll&quot; </command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\source\GenericDao\bin&quot; &quot;genericdao&quot; &quot;genericdao.dll&quot; </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
       <projectKey>GenericDao</projectKey>

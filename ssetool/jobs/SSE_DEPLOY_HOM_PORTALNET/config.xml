@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Projeto de Deploy  para o servidor simulando ambiente Homologacao - </description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>Sistema</name>
+          <description>Nome do Sistema/Modulo que sera feito o deploy</description>
+          <defaultValue>naoinfromado</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TipoApp</name>
+          <description>Tipo de aplicacao para ser feito o deploy - webportal (para modulos do portalnet), libportal(para libs do portalnet), servicosweb(ws de integracao azure)</description>
+          <defaultValue>webportal</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>C:\sse\work\jks\hom\deployapps</customWorkspace>
+  <builders>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
+      <msBuildName>MSBUILD2013</msBuildName>
+      <msBuildFile>c:\sse\tools\msbuild\DeployArtToServer.proj</msBuildFile>
+      <cmdLineArgs>/t:Webdeploy /p:Sistema=%Sistema% /p:Ambiente=homologacao</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
