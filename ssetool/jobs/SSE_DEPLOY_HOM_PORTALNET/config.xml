@@ -28,14 +28,9 @@
   <concurrentBuild>false</concurrentBuild>
   <customWorkspace>C:\sse\work\jks\hom\deployapps</customWorkspace>
   <builders>
-    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
-      <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>c:\sse\tools\msbuild\DeployArtToServer.proj</msBuildFile>
-      <cmdLineArgs>/t:Webdeploy /p:Sistema=%Sistema% /p:Ambiente=homologacao</cmdLineArgs>
-      <buildVariablesAsProperties>false</buildVariablesAsProperties>
-      <continueOnBuildFailure>false</continueOnBuildFailure>
-      <unstableIfWarnings>false</unstableIfWarnings>
-    </hudson.plugins.msbuild.MsBuildBuilder>
+    <hudson.tasks.BatchFile>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot;</command>
+    </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
   <buildWrappers/>

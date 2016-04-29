@@ -47,7 +47,7 @@ binarios e biblioteca nuget - RELEASE MASTER</description>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\source\securitygdae\bin&quot; &quot;securitygdae&quot; &quot;securitygdae.dll&quot; </command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\source\securitygdae\bin&quot; &quot;securitygdae&quot; &quot;lib&quot; &quot;securitygdae.dll&quot; </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
       <projectKey>SecurityGDAE</projectKey>

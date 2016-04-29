@@ -1,24 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Biblioteca Prodesp DATA ACCESS - Realizar procedimentos de build e criacao de artefatos &#xd;
+  <description>Servico Web RELEASE - WS CONTAGEM - Realizar procedimentos de build e criacao de artefatos &#xd;
 binarios e biblioteca nuget</description>
+  <displayName>SSE_BUILDRELEASE_WS_CONTAGEM</displayName>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.4">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://seducsp.visualstudio.com/DefaultCollection/_git/PortalNet</url>
+        <url>https://seducsp.visualstudio.com/DefaultCollection/PortalNet/_git/WSContagem</url>
         <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/feat_ci_cmelo</name>
+        <name>*/master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.AssemblaWeb">
+      <url></url>
+    </browser>
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
@@ -32,41 +36,37 @@ binarios e biblioteca nuget</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\dev\prodesp.dataaccess</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\wscontagem</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\Prodesp.DataAccess\Prodesp.DataAccess.sln&quot;  </command>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\WSContagem.sln&quot;  </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>$WORKSPACE\source\Prodesp.DataAccess\Prodesp.DataAccess.sln</msBuildFile>
-      <cmdLineArgs> /P:Configuration=Release /P:Platform=x64</cmdLineArgs>
+      <msBuildFile>$WORKSPACE\source\WSContagem.sln</msBuildFile>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=integracao /p:publishUrl=%WORKSPACE%\drop\apptemp</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
-    <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKS.ps1 &quot;%WORKSPACE%\source\Prodesp.DataAccess\bin&quot; &quot;Prodesp.DataAccess&quot; &quot;lib&quot; &quot;Prodesp.DataAccess.dll&quot; </command>
-    </hudson.tasks.BatchFile>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
-      <projectKey>Prodesp.DataAccess</projectKey>
-      <projectName>Prodesp.DataAccess</projectName>
+      <projectKey>ServiceContagem</projectKey>
+      <projectName>ServiceContagem</projectName>
       <projectVersion>1.0</projectVersion>
-      <additionalArguments>/d:sonar.verbose=true
-/d:sonar.analysis.mode=preview
-/d:sonar.issuesReport.console.enable=true</additionalArguments>
+      <additionalArguments>/d:sonar.verbose=true</additionalArguments>
     </hudson.plugins.sonar.MsBuildSQRunnerBegin>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2015</msBuildName>
-      <msBuildFile>$WORKSPACE\source\Prodesp.DataAccess\Prodesp.DataAccess.sln</msBuildFile>
-      <cmdLineArgs> /P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
+      <msBuildFile>$WORKSPACE\source\WsContagem.sln</msBuildFile>
+      <cmdLineArgs>/P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_pack &quot;%WORKSPACE%\source\Prodesp.DataAccess\Prodesp.DataAccess.nuspec&quot;  &quot;%WORKSPACE%\drop&quot;</command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\apptemp&quot; &quot;wscontagem&quot; &quot;appweb&quot; &quot;wscontagem.dll&quot; &#xd;
+</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers/>

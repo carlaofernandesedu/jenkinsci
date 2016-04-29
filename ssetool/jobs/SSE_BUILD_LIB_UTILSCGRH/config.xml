@@ -52,7 +52,9 @@ binarios e biblioteca nuget</description>
       <projectKey>UtilsCGRH</projectKey>
       <projectName>UtilsCGRH</projectName>
       <projectVersion>1.0</projectVersion>
-      <additionalArguments>/d:sonar.verbose=true</additionalArguments>
+      <additionalArguments>/d:sonar.verbose=true
+/d:sonar.analysis.mode=preview
+/d:sonar.issuesReport.console.enable=true</additionalArguments>
     </hudson.plugins.sonar.MsBuildSQRunnerBegin>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2015</msBuildName>
