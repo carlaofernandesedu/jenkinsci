@@ -46,7 +46,7 @@ binarios e biblioteca nuget - RELEASE -  a partir do branch MASTER</description>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\source\GenericDao\bin&quot; &quot;genericdao&quot; &quot;lib&quot; &quot;genericdao.dll&quot; </command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\source\GenericDao\bin&quot; &quot;genericdao&quot; &quot;lib&quot; &quot;genericdao.dll&quot; </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
       <projectKey>GenericDao</projectKey>

@@ -1,9 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Servico Web RELEASE - WS CONTAGEM - Realizar procedimentos de build e criacao de artefatos &#xd;
-binarios e biblioteca nuget</description>
-  <displayName>SSE_BUILDRELEASE_WS_CONTAGEM</displayName>
+  <description>Alteracao de Eventos - Realizar procedimentos de build e criacao de artefatos binarios </description>
+  <displayName>SSE_BUILDRELEASE_ALTERACAOEVENTOS</displayName>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.5">
@@ -18,14 +17,14 @@ binarios e biblioteca nuget</description>
         </userRemoteConfigs>
         <branches>
           <hudson.plugins.git.BranchSpec>
-            <name>*/feat_ci_altevento</name>
+            <name>*/master</name>
           </hudson.plugins.git.BranchSpec>
         </branches>
         <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source\AlteracaoEventos</relativeTargetDir>
+            <relativeTargetDir>source/alteracaoeventos</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -39,14 +38,14 @@ binarios e biblioteca nuget</description>
         </userRemoteConfigs>
         <branches>
           <hudson.plugins.git.BranchSpec>
-            <name>*/feat_ci_altevento</name>
+            <name>*/master</name>
           </hudson.plugins.git.BranchSpec>
         </branches>
         <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source\AlteracaoEventos.Pages</relativeTargetDir>
+            <relativeTargetDir>source/alteracaoeventos.pages</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -58,28 +57,28 @@ binarios e biblioteca nuget</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\release\wscontagem</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\alteracaoeventos</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\WSContagem.sln&quot;  </command>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\AlteracaoEventos.Pages\AlteracaoEventos.Pages.sln&quot;  </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>$WORKSPACE\source\WSContagem.sln</msBuildFile>
-      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=integracao /p:publishUrl=%WORKSPACE%\drop\apptemp</cmdLineArgs>
+      <msBuildFile>$WORKSPACE\source\AlteracaoEventos.Pages\AlteracaoEventos.Pages.sln</msBuildFile>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\AlteracaoEventos.Pages</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
-      <projectKey>ServiceContagem</projectKey>
-      <projectName>ServiceContagem</projectName>
+      <projectKey>AlteracaoEventos</projectKey>
+      <projectName>AlteracaoEventos</projectName>
       <projectVersion>1.0</projectVersion>
       <additionalArguments>/d:sonar.verbose=true</additionalArguments>
     </hudson.plugins.sonar.MsBuildSQRunnerBegin>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2015</msBuildName>
-      <msBuildFile>$WORKSPACE\source\WsContagem.sln</msBuildFile>
+      <msBuildFile>$WORKSPACE\source\AlteracaoEventos.Pages\AlteracaoEventos.Pages.sln</msBuildFile>
       <cmdLineArgs>/P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
@@ -87,10 +86,43 @@ binarios e biblioteca nuget</description>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\apptemp&quot; &quot;wscontagem&quot; &quot;appweb&quot; &quot;wscontagem.dll&quot; &#xd;
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\AlteracaoEventos.Pages&quot; &quot;alteracaoeventos&quot; &quot;appnet&quot; &quot;alteracaoeventos.dll,alteracaoeventos.pages.dll&quot; &#xd;
 </command>
     </hudson.tasks.BatchFile>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
+      <recipientList>$DEFAULT_RECIPIENTS,luiztorato@gmail.com</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+          <email>
+            <recipientList></recipientList>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>true</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+  </publishers>
   <buildWrappers/>
 </project>
