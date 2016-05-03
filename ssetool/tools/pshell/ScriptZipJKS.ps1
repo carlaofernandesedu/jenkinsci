@@ -14,6 +14,7 @@ Param(
 
 )
 
+$ErrorActionPreference = 'Stop'
 
 $publishrootfolder = 'c:\pst\destino'
 #$publishrootfolder = 'c:\sse\work\jks\dev\' + $appname  +  '\drop'
