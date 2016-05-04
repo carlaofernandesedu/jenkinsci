@@ -4,10 +4,14 @@ Param(
    [string]$Sistema,
    
    [Parameter(Mandatory=$True,Position=1,HelpMessage="nome do ambiente")]
-   [string]$Ambiente
+   [string]$Ambiente,
+   
+   [Parameter(Mandatory=$False,Position=2,HelpMessage="numero build")]
+   [string]$NumeroBuild
 
 )
 
+$ErrorActionPreference = 'Stop'
 
 function Deploy-Website($Package, $Server, $DestDeploy, $Username, $Password,$PathTools) 
 {
@@ -53,19 +57,44 @@ $User = "tfsdeploy"
 $Pwd = "Desp@2015"
 $InstallMS = "C:\vsoagent\tools\msdeploy"
 $SistemaValido = $false 
+$FolderBkp = "c:\sse\work\jks\deploy\hom\portalnet\"
+$FileBkp =  $FolderBkp +  ($NumeroBuild) + "_" + ($Sistema)  + ".zip"
 
-$Source = "c:\sse\work\jks\release\" + ($Sistema)  +  "\drop\"  + ($Sistema)  +  ".zip"
+
+
+
 
 if($Sistema -eq "genericdao")
 {
-    $Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
+    #$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
+    $Source = "c:\sse\work\jks\release\" + ($Sistema)  +  "\drop\"  + ($Sistema)  +  ".zip"
+	$Destdeploy = 'd:\sourcegmud\' + ($Ambiente) + '\portalnet'
     $SistemaValido = $true 
 
 }
+elseif($Sistema -eq "qualificacao")
+{
+    #$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
+    $Source = "c:\sse\work\jks\release\" + ($Sistema)  +  "\drop\portalnet.zip"
+	$Destdeploy = 'd:\sourcegmud\' + ($Ambiente) + '\portalnet'
+    $SistemaValido = $true 
+}
+
+
+Write-host 'sistema:' $Sistema
+Write-host 'ambiente:' $Ambiente
+Write-host 'numerobuild:' $NumeroBuild
+Write-host 'source:' $Source 
+Write-host 'filebkp:' $FileBkp
+Write-host 'destdeploy:' $Destdeploy
+
+
+
 
 if ($SistemaValido)
 {
    Deploy-Website $Source $Server $DestDeploy  $User $Pwd  $InstallMS
+   
 }
 else 
 {
