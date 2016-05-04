@@ -56,9 +56,10 @@ $Server = "10.200.240.19"
 $User = "tfsdeploy"
 $Pwd = "Desp@2015"
 $InstallMS = "C:\vsoagent\tools\msdeploy"
+$shordate = (Get-Date).toString("yyyyMMdd")
 $SistemaValido = $false 
 $FolderBkp = "c:\sse\work\jks\deploy\hom\portalnet\"
-$FileBkp =  $FolderBkp +  ($NumeroBuild) + "_" + ($Sistema)  + ".zip"
+$FileBkp =  $FolderBkp + ($shordate) + "_"  + ($Sistema) + "_" + ($NumeroBuild) + ".zip"
 
 
 
@@ -94,6 +95,7 @@ Write-host 'destdeploy:' $Destdeploy
 if ($SistemaValido)
 {
    Deploy-Website $Source $Server $DestDeploy  $User $Pwd  $InstallMS
+   Copy-Item $Source $FileBkp -Force -Recurse
    
 }
 else 
