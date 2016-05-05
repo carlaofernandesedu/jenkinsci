@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>VALEREFEICAO - Realizar procedimentos de build e criacao de artefatos binarios </description>
-  <displayName>SSE_BUILDRELEASE_VALEREFEICAO</displayName>
+  <description>CONSULTADADOSCADASTRAIS - Realizar procedimentos de build e criacao de artefatos binarios </description>
+  <displayName>SSE_BUILDRELEASE_CONSULTADADOSCADASTRAIS</displayName>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.5">
@@ -11,7 +11,7 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>https://seducsp.visualstudio.com/DefaultCollection/valerefeicao/_git/valerefeicao</url>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/_git/ConsultaDadosCadastrais</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
@@ -24,7 +24,7 @@
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source/valerefeicao</relativeTargetDir>
+            <relativeTargetDir>source/consultadadoscadastrais</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -32,7 +32,7 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>https://seducsp.visualstudio.com/DefaultCollection/valerefeicao/_git/valerefeicao.Pages</url>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/ConsultaDadosCadastrais/_git/ConsultaDadosCadastrais.Pages</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
@@ -45,7 +45,7 @@
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source/valerefeicao.pages</relativeTargetDir>
+            <relativeTargetDir>source/consultadadoscadastrais.pages</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -57,28 +57,28 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\release\valerefeicao</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\consultadadoscadastrais</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\Valerefeicao.Pages\Valerefeicao.Pages.sln&quot;  </command>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\consultadadoscadastrais.Pages\consultadadoscadastrais.Pages.sln&quot;  </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>$WORKSPACE\source\Valerefeicao.Pages\Valerefeicao.Pages.sln</msBuildFile>
-      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\ValeRefeicao.Pages</cmdLineArgs>
+      <msBuildFile>$WORKSPACE\source\consultadadoscadastrais.Pages\consultadadoscadastrais.Pages.sln</msBuildFile>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\ConsultaDadosCadastrais.Pages</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
-      <projectKey>VALEREFEICAO</projectKey>
-      <projectName>VALEREFEICAO</projectName>
+      <projectKey>CONSULTADADOSCADASTRAIS</projectKey>
+      <projectName>CONSULTADADOSCADASTRAIS</projectName>
       <projectVersion>1.0</projectVersion>
       <additionalArguments>/d:sonar.verbose=true</additionalArguments>
     </hudson.plugins.sonar.MsBuildSQRunnerBegin>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2015</msBuildName>
-      <msBuildFile>$WORKSPACE\source\ValeRefeicao.Pages\ValeRefeicao.Pages.sln</msBuildFile>
+      <msBuildFile>$WORKSPACE\source\consultadadoscadastrais.Pages\consultadadoscadastrais.Pages.sln</msBuildFile>
       <cmdLineArgs>/P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
@@ -86,7 +86,7 @@
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\ValeRefeicao.Pages&quot; &quot;valerefeicao&quot; &quot;appnet&quot; &quot;valerefeicao.dll,valerefeicao.pages.dll&quot;&#xd;
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\consultadadoscadastrais.Pages&quot; &quot;consultadadoscadastrais&quot; &quot;appnet&quot; &quot;consultadadoscadastrais.dll,consultadadoscadastrais.pages.dll&quot;&#xd;
 </command>
     </hudson.tasks.BatchFile>
   </builders>
