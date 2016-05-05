@@ -2,6 +2,7 @@
 <project>
   <actions/>
   <description>Projeto de Deploy  para o servidor simulando ambiente Homologacao - </description>
+  <displayName>SSE_DEPLOY_HOM_PORTALNET</displayName>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
@@ -26,10 +27,10 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>C:\sse\work\jks\hom\deployapps</customWorkspace>
+  <customWorkspace>C:\sse\work\jks\deploy\hom\portalnet</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot;</command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\homologacao\portalnet&quot;</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers/>

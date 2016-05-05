@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Projeto de Deploy  para o servidor ambiente Teste - </description>
+  <description>Projeto de Deploy  para o servidor simulando ambiente Testes- </description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
@@ -26,10 +26,10 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>C:\sse\work\jks\hom\deployapps</customWorkspace>
+  <customWorkspace>C:\sse\work\jks\deploy\dsv\portalnet</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;teste&quot;</command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;teste&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\teste\portalnet&quot;</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
