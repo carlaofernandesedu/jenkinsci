@@ -37,19 +37,32 @@ Write-Host "buildnumber:"  $buildnumber
 Write-Host "filelog:"  ($Filelog)
 Write-Host "short:" $shordate
 
-
-Write-Host "Obtendo as informações da pasta a ser compactada "  $folder
+Write-Host "===================================================================================="
+Write-Host "Obtendo as informações da pasta a ser compactada -> "  $folder
+Write-Host "===================================================================================="
+Write-Host " "
+Write-Host "Arquivos existentes no pacote"
 Get-ChildItem  -Path $folder -Recurse
-Write-Host "Gerando o arquivo de Log "  $FileLog  " a partir do conteudo" $folder
+Write-Host "===================================================================================="
+Write-Host "Gerando o arquivo de Log "  $FileLog  " a partir do conteudo da pasta:" $folder
+Write-Host "===================================================================================="
 if (Test-Path $Zipfile) 
 {
-    Write-Host 'Excluindo arquivo zip do build anterior'  $Zipfile
+    Write-Host " " 
+    Write-Host "===================================================================================="
+    Write-Host 'Excluindo arquivo zip do build anterior info:'  $Zipfile
+    Write-Host "===================================================================================="
     Remove-Item $Zipfile
 }
 
 Get-ChildItem  -Path $folder -Recurse  >> $FileLog
+Write-Host "===================================================================================="
 Write-Host "Iniciando a compressao da pasta " ($folder)  "..."
+Write-Host "===================================================================================="
 Compress-ZIPFile $folder $ZipFile $True 
-Write-Host "Termino da Compressao da pasta"  ($folder)
+Write-Host "===================================================================================="
+Write-Host "Compressao da pasta concluida." 
+Write-Host "===================================================================================="
 Write-Host "O Arquivo" (Get-Item $ZipFile).FullName " foi criado em " (Get-Item $ZipFile).CreationTime  " com tamanho " (Get-Item $ZipFile).Length
+Write-Host "===================================================================================="
 
