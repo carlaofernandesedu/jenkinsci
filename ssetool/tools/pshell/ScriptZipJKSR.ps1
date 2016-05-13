@@ -14,10 +14,10 @@ Param(
 
 )
 
-
+$ErrorActionPreference = 'Stop'
 
 #$publishrootfolder = 'c:\pst\destino'
-$publishrootfolder = 'c:\sse\work\jks\dev\' + $appname  +  '\drop'
+$publishrootfolder = 'c:\sse\work\jks\release\' + $appname  +  '\drop'
 #$publishrootfolder = 'c:\sse\work\jks\dev\genericdao\drop'
 
 
@@ -30,6 +30,7 @@ Write-host 'keppbinfiles:' $keepbinfiles
 
 function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
 {
+    
     try 
     {
         #Verificando a pasta de publicacao
@@ -87,6 +88,7 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
 
 function ZIP-AppWeb($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
 {
+	
     try 
     {
         #Verificando a pasta de publicacao
@@ -142,12 +144,13 @@ function ZIP-AppWeb($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
 
 function ZIP-AppModuloNet($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
 {
-    try 
+    
+	try 
     {
         #Verificando a pasta de publicacao
         if(Test-Path $PubRootFolder)
         {
-            #Apagar dados gerados de geracao anterior 
+            #Apagar dados gerados de geracao anterior  
             $FilesPubRootFolder = $PubRootFolder + '\*.*'
             Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
             Remove-Item $FilesPubRootFolder 
@@ -161,10 +164,10 @@ function ZIP-AppModuloNet($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
             Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
             Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
             #Gerar o arquivo zip 
-            $ZipFile = $PubRootFolder + '\' +  'portalnet.zip'
+            $ZipFile = $PubRootFolder + '\' + 'portalnet.zip'
             Write-Host 'Gerando o arquivo ZIP' $ZipFile
             $FolderBINExclusao = $PubRootFolder + '\bin'
-            Compress-ZIPFile $FolderNet $ZipFile $True
+            Compress-ZIPFile $FolderNet $ZipFile $False
             #Remover os arquivos desnecessários
         
                 Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))

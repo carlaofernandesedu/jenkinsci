@@ -1,4 +1,4 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 Param(
    [Parameter(Mandatory=$True,Position=0,HelpMessage="nome do sistema")]
    [string]$Sistema,
@@ -6,14 +6,9 @@ Param(
    [Parameter(Mandatory=$True,Position=1,HelpMessage="nome do ambiente")]
    [string]$Ambiente,
    
-   [Parameter(Mandatory=$True,Position=2,HelpMessage="workspace")]
-   [string]$FolderBkp,
-   
-   [Parameter(Mandatory=$True,Position=3,HelpMessage="numero build")]
-   [string]$NumeroBuild,
-   
-   [Parameter(Mandatory=$True,Position=4,HelpMessage="destino")]
-   [string]$Destdeploy
+   [Parameter(Mandatory=$False,Position=2,HelpMessage="numero build")]
+   [string]$NumeroBuild
+
 )
 
 $ErrorActionPreference = 'Stop'
@@ -61,46 +56,27 @@ $Server = "10.200.240.19"
 $User = "tfsdeploy"
 $Pwd = "Desp@2015"
 $InstallMS = "C:\sse\tools\msdeploy"
-$shordate = (Get-Date).toString("yyyyMMdd")
 $SistemaValido = $false 
-$FileBkp =  $FolderBkp + "\" + ($shordate) + "_"  + ($Sistema) + "_" + ($NumeroBuild) + ".zip"
-$DestdeployGMUD = ''
+$FolderBkp = "c:\sse\work\jks\deploy\hom\portalnet\"
+$FileBkp =  $FolderBkp +  ($NumeroBuild) + "_" + ($Sistema)  + ".zip"
 
 
 
 
-if(
-$Sistema -eq "genericdao" -Or 
-$Sistema -eq "prodesp.dataaccess" -Or  
-$Sistema -eq "securitygdae" -Or 
-$Sistema -eq "utils" -Or 
-$Sistema -eq "utilscgrh"
-)
+
+if($Sistema -eq "genericdao")
 {
     #$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
-	#$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
     $Source = "c:\sse\work\jks\release\" + ($Sistema)  +  "\drop\"  + ($Sistema)  +  ".zip"
+	$Destdeploy = 'd:\sourcegmud\' + ($Ambiente) + '\portalnet'
     $SistemaValido = $true 
 
 }
-elseif
-(
-$Sistema -eq "qualificacao" -Or
-$Sistema -eq "alocacaopei" -Or
-$Sistema -eq "alteracaoeventos" -Or
-$Sistema -eq "consultadadoscadastrais" -Or
-$Sistema -eq "enquadramentoqae" -Or
-$Sistema -eq "estprovisoria" -Or
-$Sistema -eq "fichafai" -Or
-$Sistema -eq "roe" -Or
-$Sistema -eq "valerefeicao" -Or
-$Sistema -eq "contageh" -Or
-$Sistema -eq "gratificacaogap"
-)
+elseif($Sistema -eq "qualificacao")
 {
     #$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
-	#$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
     $Source = "c:\sse\work\jks\release\" + ($Sistema)  +  "\drop\portalnet.zip"
+	$Destdeploy = 'd:\sourcegmud\' + ($Ambiente) + '\portalnet'
     $SistemaValido = $true 
 }
 
@@ -117,17 +93,6 @@ Write-host 'destdeploy:' $Destdeploy
 
 if ($SistemaValido)
 {
-   if(Test-Path $FileBkp)
-   {
-     Write-Host "Usando o backup do pacote para deploy"
-	 $Source = $FileBkp
-   }
-   else 
-   {
-	 Write-Host "Fazendo o backup do pacote"
-     Copy-Item $Source $FileBkp -Force -Recurse
-   }
-   Write-Host "Fazendo o deploy"
    Deploy-Website $Source $Server $DestDeploy  $User $Pwd  $InstallMS
    
 }

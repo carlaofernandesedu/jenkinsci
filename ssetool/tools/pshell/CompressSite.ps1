@@ -42,7 +42,10 @@ Write-Host "Obtendo as informações da pasta a ser compactada -> "  $folder
 Write-Host "===================================================================================="
 Write-Host " "
 Write-Host "Arquivos existentes no pacote"
-Get-ChildItem  -Path $folder -Recurse
+$listdlls = $folder + '\bin\*.dll'
+$listfolders = $folder +  '\paginas'
+get-Childitem $listdlls 
+get-ChildItem -Directory -Path $listfolders 
 Write-Host "===================================================================================="
 Write-Host "Gerando o arquivo de Log "  $FileLog  " a partir do conteudo da pasta:" $folder
 Write-Host "===================================================================================="
@@ -63,6 +66,6 @@ Compress-ZIPFile $folder $ZipFile $True
 Write-Host "===================================================================================="
 Write-Host "Compressao da pasta concluida." 
 Write-Host "===================================================================================="
-Write-Host "O Arquivo" (Get-Item $ZipFile).FullName " foi criado em " (Get-Item $ZipFile).CreationTime  " com tamanho " (Get-Item $ZipFile).Length
+Write-Host "O Arquivo" (Get-Item $ZipFile).FullName " foi criado em " (Get-Item $ZipFile).LastWriteTime  " com tamanho " (Get-Item $ZipFile).Length
 Write-Host "===================================================================================="
 
