@@ -1,21 +1,41 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Projeto de Deploy  para o servidor simulando ambiente Testes- </description>
+  <description>Projeto de Deploy  para o servidor simulando ambiente Teste -  http://10.200.240.19/portalnethomolog</description>
+  <displayName>SSE_DEPLOY_DEV_PORTALNET</displayName>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
-          <name>Sistema</name>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>SISTEMA</name>
           <description>Nome do Sistema/Modulo que sera feito o deploy</description>
-          <defaultValue>naoinfromado</defaultValue>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>TipoApp</name>
-          <description>Tipo de aplicacao para ser feito o deploy - webportal (para modulos do portalnet), libportal(para libs do portalnet), servicosweb(ws de integracao azure)</description>
-          <defaultValue>webportal</defaultValue>
-        </hudson.model.StringParameterDefinition>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>alocacaopei</string>
+              <string>alteracaoeventos</string>
+              <string>bonush</string>
+              <string>cesu </string>
+              <string>consultadadoscadastrais</string>
+              <string>contageh</string>
+              <string>enquadramentoqae </string>
+              <string>estprovisoria </string>
+              <string>fichafai</string>
+              <string>genericdao</string>
+              <string>gratificacaogap</string>
+              <string>prodesp.dataaccess</string>
+              <string>qualificacao</string>
+              <string>relatorio</string>
+              <string>remocaoqae </string>
+              <string>remocaoqm  </string>
+              <string>roe</string>
+              <string>securitygdae </string>
+              <string>utils </string>
+              <string>utilscgrh</string>
+              <string>valerefeicao</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -26,12 +46,14 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>C:\sse\work\jks\deploy\dsv\portalnet</customWorkspace>
+  <customWorkspace>C:\sse\work\jks\deploy\dev\portalnet</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
       <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;teste&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\teste\portalnet&quot;</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers/>
-  <buildWrappers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.5"/>
+  </buildWrappers>
 </project>

@@ -92,7 +92,7 @@
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS ,hdguimaraes@gmail.com, theus91@gmail.com</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS ,hdguimaraes@gmail.com, theus91@gmail.com, vbernardes@sp.gov.br, jcapellini@sp.gov.br</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
@@ -117,7 +117,7 @@
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-      <attachBuildLog>true</attachBuildLog>
+      <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>

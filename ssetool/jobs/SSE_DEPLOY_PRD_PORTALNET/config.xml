@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Projeto de Deploy  para o servidor simulando ambiente Teste -  http://10.200.240.19/portalnetpreproducao</description>
-  <displayName>SSE_DEPLOY_HOM_PORTALNET</displayName>
+  <description>Projeto de Deploy  para o servidor simulando ambiente Teste -  http://10.200.240.19/portalnet</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
@@ -49,24 +48,23 @@
   <customWorkspace>C:\sse\work\jks\deploy\hom\portalnet</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\homologacao\portalnet&quot;</command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;producao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\producao\portalnet&quot;</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\sourcegmud\homologacao\portalnet&quot;</command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;producao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\sourcegmud\producao\portalnet&quot;</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS, luiztorato@gmail.com , pportela@sp.gov.br, carlaofernandesedu@gmail.com, vbernardes@sp.gov.br</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS, luiztorato@gmail.com , pportela@sp.gov.br ,carlaofernandesedu@gmail.com, vbernardes@sp.gov.br</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
             <recipientList></recipientList>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT
-Solicitante da execucao  $BUILD_USER
-O modulo $SISTEMA  foi atualizado no ambiente do portalnet - http://10.200.240.19/portalnetpreproducao
-</body>
+O modulo $SISTEMA  foi atualizado no ambiente do portalnet - http://10.200.240.19/portalnet - PRODUCAO
+Solicitado por $BUILD_USER</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>

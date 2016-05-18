@@ -1,41 +1,34 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Projeto de Deploy  para o servidor simulando ambiente Teste -  http://10.200.240.19/portalnetpreproducao</description>
-  <displayName>SSE_DEPLOY_HOM_PORTALNET</displayName>
+  <description>Job para possibilitar subir o pacote nuget gerado pelo processo de Build no gerenciador de Pacotes</description>
+  <displayName>SSE_PUSH_PACKAGENUGET_PORTAL_INTEGRACAO</displayName>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.ChoiceParameterDefinition>
           <name>SISTEMA</name>
-          <description>Nome do Sistema/Modulo que sera feito o deploy</description>
+          <description>Escolher o nome do pacote Nuget para ser empurrado o Gerenciador de Pacotes do VSTS - nome da fonte PORTALNET_INTEGRACAO</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>alocacaopei</string>
-              <string>alteracaoeventos</string>
-              <string>bonush</string>
-              <string>cesu </string>
-              <string>consultadadoscadastrais</string>
               <string>contageh</string>
-              <string>enquadramentoqae </string>
-              <string>estprovisoria </string>
-              <string>fichafai</string>
               <string>genericdao</string>
-              <string>gratificacaogap</string>
               <string>prodesp.dataaccess</string>
               <string>qualificacao</string>
               <string>relatorio</string>
-              <string>remocaoqae </string>
-              <string>remocaoqm  </string>
-              <string>roe</string>
-              <string>securitygdae </string>
-              <string>utils </string>
+              <string>securitygdae</string>
+              <string>utils</string>
               <string>utilscgrh</string>
-              <string>valerefeicao</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>ARQNUGET</name>
+          <description>Informar exatamente o nome do pacote do Nuget incluindo a extensao (.nupkg) para ser empurrado o Gerenciador de Pacotes do VSTS - nome da fonte PORTALNET_INTEGRACAO
+- Esse arquivo foi gerado no processo de Build do Projeto e esta na pasta DROP.</description>
+          <defaultValue>naoinformado</defaultValue>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -46,27 +39,21 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>C:\sse\work\jks\deploy\hom\portalnet</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\homologacao\portalnet&quot;</command>
-    </hudson.tasks.BatchFile>
-    <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\sourcegmud\homologacao\portalnet&quot;</command>
+      <command>C:\sse\tools\nuget\nuget_push C:\sse\work\jks\release\%SISTEMA%\drop\%ARQNUGET% </command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS, luiztorato@gmail.com , pportela@sp.gov.br, carlaofernandesedu@gmail.com, vbernardes@sp.gov.br</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS, pportela@sp.gov.br , luiztorato@gmail.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
             <recipientList></recipientList>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT
-Solicitante da execucao  $BUILD_USER
-O modulo $SISTEMA  foi atualizado no ambiente do portalnet - http://10.200.240.19/portalnetpreproducao
-</body>
+O modulo  $SISTEMA foi atualizado com o pacote $ARQNUGET</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
@@ -80,7 +67,7 @@ O modulo $SISTEMA  foi atualizado no ambiente do portalnet - http://10.200.240.1
         </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
       </configuredTriggers>
       <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultSubject>$DEFAULT_SUBJECT </defaultSubject>
       <defaultContent>$DEFAULT_CONTENT</defaultContent>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
@@ -92,7 +79,5 @@ O modulo $SISTEMA  foi atualizado no ambiente do portalnet - http://10.200.240.1
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
-  <buildWrappers>
-    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.5"/>
-  </buildWrappers>
+  <buildWrappers/>
 </project>

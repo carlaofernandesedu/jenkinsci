@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <displayName>Acesso</displayName>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>c:\sse\work\jks\testes\Acesso</customWorkspace>
+  <builders>
+    <hudson.plugins.sctmexecutor.SCTMExecutor plugin="SCTMExecutor@1.5.1">
+      <projectId>151</projectId>
+      <execDefIds>4786</execDefIds>
+      <delay>0</delay>
+      <buildNumberUsageOption>2</buildNumberUsageOption>
+      <jobName></jobName>
+      <continueOnError>false</continueOnError>
+      <collectResults>true</collectResults>
+      <ignoreSetupCleanup>false</ignoreSetupCleanup>
+      <succeed>false</succeed>
+    </hudson.plugins.sctmexecutor.SCTMExecutor>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
