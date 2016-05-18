@@ -48,7 +48,7 @@
 <Choose>  
 	<When Condition = "'$(Hospd)'=='portalnet'" >
 		<PropertyGroup>
-			<DropFolder>$(BaseFolder)\hom\deployapps\drop\$(Sistema)</DropFolder>	
+			<DropFolder>$(BaseFolder)\release\$(Sistema)\drop</DropFolder>	
 			<DestDeploy>d:\$(Ambiente)\portalnet</DestDeploy>
             <ZipName>$(Sistema)</ZipName> 			
 		</PropertyGroup>		

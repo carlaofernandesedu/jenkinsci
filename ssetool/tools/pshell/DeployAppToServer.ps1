@@ -85,17 +85,28 @@ $Sistema -eq "utilscgrh"
 }
 elseif
 (
-$Sistema -eq "qualificacao" -Or
 $Sistema -eq "alocacaopei" -Or
 $Sistema -eq "alteracaoeventos" -Or
+$Sistema -eq "bonush" -Or
+$Sistema -eq "cesu" -Or
 $Sistema -eq "consultadadoscadastrais" -Or
+$Sistema -eq "contageh" -Or
 $Sistema -eq "enquadramentoqae" -Or
 $Sistema -eq "estprovisoria" -Or
 $Sistema -eq "fichafai" -Or
+$Sistema -eq "genericdao" -Or
+$Sistema -eq "gratificacaogap" -Or
+$Sistema -eq "gratificacaogdpi" -Or
+$Sistema -eq "prodesp.dataaccess" -Or
+$Sistema -eq "qualificacao" -Or
+$Sistema -eq "relatorio" -Or
 $Sistema -eq "roe" -Or
-$Sistema -eq "valerefeicao" -Or
-$Sistema -eq "contageh" -Or
-$Sistema -eq "gratificacaogap"
+$Sistema -eq "remocaoqae" -Or
+$Sistema -eq "remocaoqm" -Or
+$Sistema -eq "securitygdae" -Or
+$Sistema -eq "utils" -Or
+$Sistema -eq "utilscgrh" -Or
+$Sistema -eq "valerefeicao"
 )
 {
     #$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
