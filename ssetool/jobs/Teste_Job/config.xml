@@ -18,7 +18,7 @@
       <projectId>151</projectId>
       <execDefIds>4786</execDefIds>
       <delay>0</delay>
-      <buildNumberUsageOption>2</buildNumberUsageOption>
+      <buildNumberUsageOption>1</buildNumberUsageOption>
       <jobName></jobName>
       <continueOnError>false</continueOnError>
       <collectResults>true</collectResults>

@@ -89,6 +89,7 @@ $Sistema -eq "alocacaopei" -Or
 $Sistema -eq "alteracaoeventos" -Or
 $Sistema -eq "bonush" -Or
 $Sistema -eq "cesu" -Or
+$Sistema -eq "diarias" -Or
 $Sistema -eq "consultadadoscadastrais" -Or
 $Sistema -eq "contageh" -Or
 $Sistema -eq "enquadramentoqae" -Or

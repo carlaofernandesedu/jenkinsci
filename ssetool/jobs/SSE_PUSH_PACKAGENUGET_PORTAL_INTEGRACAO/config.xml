@@ -13,6 +13,7 @@
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>contageh</string>
+              <string>diarias</string>
               <string>genericdao</string>
               <string>prodesp.dataaccess</string>
               <string>qualificacao</string>
