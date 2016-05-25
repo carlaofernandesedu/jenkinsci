@@ -22,6 +22,7 @@
               <string>fichafai</string>
               <string>genericdao</string>
               <string>gratificacaogap</string>
+              <string>gratificacaogge</string>
               <string>prodesp.dataaccess</string>
               <string>qualificacao</string>
               <string>relatorio</string>
@@ -85,7 +86,7 @@ Pacote gerado por $BUILD_USER </body>
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-      <attachBuildLog>true</attachBuildLog>
+      <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>

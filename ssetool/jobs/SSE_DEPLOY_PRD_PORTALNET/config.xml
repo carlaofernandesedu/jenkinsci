@@ -21,7 +21,11 @@
               <string>estprovisoria </string>
               <string>fichafai</string>
               <string>genericdao</string>
+              <string>gratificacaofuncao</string>
               <string>gratificacaogap</string>
+              <string>gratificacaogge</string>
+              <string>gratificacaogdpi</string>
+              <string>meritocracia</string>
               <string>prodesp.dataaccess</string>
               <string>qualificacao</string>
               <string>relatorio</string>

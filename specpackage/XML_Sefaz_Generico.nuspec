@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>XML_Sefaz_Generico</id>
+        <version>1.0.0.0</version>
+        <title>XML_Sefaz_Generico</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>XML_Sefaz_Generico</description>
+        <summary></summary>
+    </metadata>
+    <files>
+        <file src="lib\net45\XML_Sefaz_Generico.dll" target="lib\net45\XML_Sefaz_Generico.dll" />
+    </files>
+</package>

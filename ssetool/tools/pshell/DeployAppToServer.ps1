@@ -95,8 +95,11 @@ $Sistema -eq "enquadramentoqae" -Or
 $Sistema -eq "estprovisoria" -Or
 $Sistema -eq "fichafai" -Or
 $Sistema -eq "genericdao" -Or
+$Sistema -eq "gratificacaofuncao" -Or
 $Sistema -eq "gratificacaogap" -Or
+$Sistema -eq "gratificacaogge" -Or
 $Sistema -eq "gratificacaogdpi" -Or
+$Sistema -eq "meritocracia" -Or
 $Sistema -eq "prodesp.dataaccess" -Or
 $Sistema -eq "qualificacao" -Or
 $Sistema -eq "relatorio" -Or

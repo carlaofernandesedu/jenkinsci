@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>CONTAGEH - Realizar procedimentos de build e criacao de artefatos binarios </description>
-  <displayName>SSE_BUILDRELEASE_CONTAGEH</displayName>
+  <description>GRATIFICACAOFUNCAO- Realizar procedimentos de build e criacao de artefatos binarios </description>
+  <displayName>SSE_BUILDRELEASE_GRATIFICACAOFUNCAO</displayName>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.5">
@@ -11,7 +11,7 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>https://seducsp.visualstudio.com/DefaultCollection/_git/ContageH</url>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/_git/GratificacaoFuncao</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
@@ -24,7 +24,7 @@
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source/contageh</relativeTargetDir>
+            <relativeTargetDir>source/gratificacaofuncao</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -32,7 +32,7 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>https://seducsp.visualstudio.com/DefaultCollection/ContageH/_git/ContageH.Pages</url>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/GratificacaoFuncao/_git/GratificacaoFuncao.Pages</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
@@ -45,7 +45,7 @@
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source/contageh.pages</relativeTargetDir>
+            <relativeTargetDir>source/gratificacaofuncao.pages</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -57,28 +57,28 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\release\contageh</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\gratificacaofuncao</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\contageh.Pages\contageh.Pages.sln&quot;  </command>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\gratificacaofuncao.Pages\gratificacaofuncao.Pages.sln&quot;  </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>$WORKSPACE\source\ContageH.Pages\ContageH.Pages.sln</msBuildFile>
-      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\Contageh.Pages</cmdLineArgs>
+      <msBuildFile>$WORKSPACE\source\gratificacaofuncao.Pages\gratificacaofuncao.Pages.sln</msBuildFile>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\GratificacaoFuncao.Pages</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
-      <projectKey>ContageH</projectKey>
-      <projectName>ContageH</projectName>
+      <projectKey>GratificacaoFuncao</projectKey>
+      <projectName>GratificacaoFuncao</projectName>
       <projectVersion>1.0</projectVersion>
       <additionalArguments>/d:sonar.verbose=true</additionalArguments>
     </hudson.plugins.sonar.MsBuildSQRunnerBegin>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2015</msBuildName>
-      <msBuildFile>$WORKSPACE\source\contageh.Pages\contageh.Pages.sln</msBuildFile>
+      <msBuildFile>$WORKSPACE\source\gratificacaofuncao.Pages\gratificacaofuncao.Pages.sln</msBuildFile>
       <cmdLineArgs>/P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
@@ -86,11 +86,8 @@
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\contageh.Pages&quot; &quot;contageh&quot; &quot;appnet&quot; &quot;contageh.dll,contageh.pages.dll&quot; &#xd;
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\gratificacaofuncao.Pages&quot; &quot;gratificacaofuncao&quot; &quot;appnet&quot; &quot;gratificacaofuncao.dll,gratificacaofuncao.pages.dll&quot; &#xd;
 </command>
-    </hudson.tasks.BatchFile>
-    <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_pack &quot;%WORKSPACE%\source\contageh.pages\contageh.nuspec&quot;  &quot;%WORKSPACE%\drop&quot;</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
@@ -101,7 +98,8 @@
           <email>
             <recipientList></recipientList>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <body>$PROJECT_DEFAULT_CONTENT
+Solicitado por: $BUILD_USER</body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
@@ -120,12 +118,14 @@
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-      <attachBuildLog>true</attachBuildLog>
+      <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>
       <disabled>false</disabled>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
-  <buildWrappers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.builduser.BuildUser plugin="build-user-vars-plugin@1.5"/>
+  </buildWrappers>
 </project>
