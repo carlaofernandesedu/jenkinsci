@@ -47,7 +47,7 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
             $FolderBIN = $PubRootFolder + '\bin'
             $FolderBINExclusao = $FolderBin + '\*.*'
             Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
-            Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
+            #Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
             #Gerar o arquivo zip 
             $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
             Write-Host 'Gerando o arquivo ZIP' $ZipFile
@@ -84,6 +84,65 @@ function ZIP-AppLib($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
         return 
     }      
 }
+
+function ZIP-AppSVC($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
+{
+    
+    try 
+    {
+        #Verificando a pasta de publicacao
+        if(Test-Path $PubRootFolder)
+        {
+            #Apagar dados gerados de geracao anterior 
+            $FilesPubRootFolder = $PubRootFolder + '\*.*'
+            Write-Host 'Excluindo arquivos build anterior'  $FilesPubRootFolder
+            Remove-Item $FilesPubRootFolder            
+            #Copiar os arquivos gerados no pasta source
+            Write-Host 'Copiando arquivos de' $SourceFolder 'para' $PubRootFolder
+            $FolderBIN = $PubRootFolder + '\bin'
+            $SourceFiles  = $SourceFolder + '\*.*'
+            Copy-Item $SourceFiles $FolderBIN -Force
+            #Verificar restrição de arquivos definidos para o pacote 
+            $FolderBINExclusao = $FolderBin + '\*.*'
+            Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
+            Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
+            #Gerar o arquivo zip 
+            $ZipFile = $PubRootFolder + '\' + $Sistema + '.zip'
+            Write-Host 'Gerando o arquivo ZIP' $ZipFile
+            Compress-ZIPFile $FolderBIN $ZipFile $False
+            #Remover os arquivos desnecessários
+        
+                Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Recurse -File))
+                { 
+                    if($ZipFile -ne $ItemRootExclusao.FullName)
+                    {
+                        Write-Host 'Removendo o arquivo' $ItemRootExclusao.FullName
+                        Remove-Item $ItemRootExclusao.FullName 
+                    }
+                }
+                Foreach($ItemRootExclusao in (Get-ChildItem $PubRootFolder -Directory))
+                { 
+                    Write-Host 'Removendo o diretorio' $ItemRootExclusao.FullName
+                    Remove-Item $ItemRootExclusao.FullName -Recurse 
+                }
+                exit 0         
+        }
+        else 
+        {
+          Write-Host 'Caminho de publicacao informado incorretamente' $PubRootFolder
+          exit 1
+          return  
+        }
+
+    }
+    catch [Exception]
+    {
+        Write-Host 'ERRO NA EXECUCAO DO SCRIPT:' $_.Exception.Message
+        exit 1 
+        return 
+    }      
+}
+
 
 
 function ZIP-AppWeb($SourceFolder,$PubRootFolder,$Sistema,$KeepBINFiles)
@@ -228,6 +287,11 @@ elseif ($typeapp -eq "appnet")
 {
     ZIP-AppModuloNet $sourcerootfolder $publishrootfolder $appname $keepbinfiles
 }
+elseif ($typeapp -eq "svc")
+{
+    ZIP-AppSVC $sourcerootfolder $publishrootfolder $appname $keepbinfiles
+}
+
 else
 {
   Write-Host "Tipo de Aplicacao nao implementada:" ($typeapp)
