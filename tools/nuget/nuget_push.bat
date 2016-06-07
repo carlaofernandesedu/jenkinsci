@@ -1,1 +1,0 @@
-C:\sse\tools\nuget\NuGet.exe push %1  -Source https://seducsp.pkgs.visualstudio.com/DefaultCollection/_packaging/PORTALNET_INTEGRACAO/nuget/v2 -apikey "nk5sau6o5fhihnuvbbkuizefz6uqajvryciye52gnivmo7gvhjua"
