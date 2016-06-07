@@ -10,7 +10,7 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>&lt;linkrmodulo&gt;</url>
+            <url>&lt;linkmodulo&gt;</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
@@ -31,7 +31,7 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>&lt;linkrmodulopages&gt;</url>
+            <url>&lt;linkmodulopages&gt;</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
@@ -64,7 +64,7 @@
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
       <msBuildFile>$WORKSPACE\source\&lt;modulo&gt;.Pages\&lt;modulo&gt;.Pages.sln</msBuildFile>
-      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\&lt;modulo&gt;.Pages</cmdLineArgs>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\&lt;pastaportal&gt;</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>
@@ -85,7 +85,7 @@
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\&lt;modulo&gt;.Pages&quot; &quot;&lt;modulo&gt;&quot; &quot;appnet&quot; &quot;&lt;modulo&gt;.dll,&lt;modulo&gt;.pages.dll&quot; &#xd;
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\&lt;pastaportal&gt;&quot; &quot;&lt;modulo&gt;&quot; &quot;appnet&quot; &quot;&lt;modulo&gt;.dll,&lt;modulo&gt;.pages.dll&quot; &#xd;
 </command>
     </hudson.tasks.BatchFile>
   </builders>
@@ -116,7 +116,7 @@
       <attachmentsPattern></attachmentsPattern>
       <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
       <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-      <attachBuildLog>true</attachBuildLog>
+      <attachBuildLog>false</attachBuildLog>
       <compressBuildLog>false</compressBuildLog>
       <replyTo>$DEFAULT_REPLYTO</replyTo>
       <saveOutput>false</saveOutput>

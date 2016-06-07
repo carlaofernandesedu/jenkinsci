@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="DeployPages" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  >
+<PropertyGroup>
+    <Sistema      Condition="'$(Sistema)'==''">package</Sistema>
+	<Ambiente     Condition="'$(Ambiente)'==''">teste</Ambiente>
+	<PathMSBuild  Condition="'$(PathMSBuild)'==''">c:\sse\tools\msbuild</PathMSBuild>
+	<BuildFolder  Condition="'$(BuildFolder)'==''">c:\sse\work\jks</BuildFolder>
+    <ZipName      Condition="'$(ZipName)'==''">package</ZipName>
+	<DestDeploy  Condition="'$(DestDeploy)'==''">c:\temp\webdeploy</DestDeploy>
+  </PropertyGroup>
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Zip" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Cab" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.DNZip" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.File" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.FindUnder" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.RoboCopy" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Computer.WindowsService" />
+  <Choose>
+	<When Condition = "'$(Sistema)'=='alteracaoeventos' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\alteracaoeventos\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='alteracaojornada' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\alteracaojornada\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='progressaoqse' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\progressaoqse\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='titulo' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\titulo\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='boletimfrequencia' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\boletimfrequencia\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='contageh' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\contageh\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+    <When Condition = "'$(Sistema)'=='atestadomedico' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\atestadomedico\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='enquadramentoqae' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\enquadramentoqae\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='importacao' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\importacao\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='escolaformacao' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\escolaformacao\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='estabilidadeprovisoria' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\estabilidadeprovisoria\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='valerefeicao' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\valerefeicao\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='probatorioqseqae' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\probatorioqseqae\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\teste\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='incorpdec' and '$(Ambiente)'=='homologacao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\hom\incorpdec\publish</BuildFolder>
+			<ZipNamePdb>$(ZipName)_pdb</ZipNamePdb>
+			<DestDeploy>d:\remote\portalnet</DestDeploy>
+		</PropertyGroup>		
+    </When>
+	<When Condition = "'$(Sistema)'=='controleos' and '$(Ambiente)'=='teste'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\dev\controleos\publish</BuildFolder>
+			<ZipNamePdb>$(ZipNamePdb)_pdb</ZipNamePdb>
+			<DestDeploy>d:\teste\controleos</DestDeploy>
+		</PropertyGroup>		
+	</When>
+  </Choose>
+<Target Name="DeployPages" Condition="'$(BuildFolder)'!='c:\sse\work\jks'" >	
+		 <MSBuild.ExtensionPack.FileSystem.FindUnder TaskAction="FindFiles" Path="$(BuildFolder)">
+            <Output ItemName="AllFoundItems" TaskParameter="FoundItems"/>
+        </MSBuild.ExtensionPack.FileSystem.FindUnder>
+		<ItemGroup>
+			<Buildfiles Include="@(AllFoundItems)"  Exclude="$(BuildFolder)\bin\*.*" />
+			<FoldersToClean Include="$([System.IO.Directory]::GetDirectories(&quot;$(BuildFolder)&quot;))" Exclude="$(BuildFolder)\bin;$(BuildFolder)\paginas" />
+		</ItemGroup> 
+		<Message Text="Realizando a copia do arquivo @(Buildfiles) para a pasta $(BuildFolder)\paginas\$(Sistema).pages" Condition="Exists('%(Buildfiles.Identity)')" /> 
+		 <Copy
+            SourceFiles="@(Buildfiles)"
+            DestinationFiles="@(Buildfiles->Replace('$(BuildFolder)','$(BuildFolder)\paginas\$(Sistema).pages'))"
+			Condition="Exists('%(Buildfiles.Identity)')"
+        />
+		<Message Text="Realizando a exclusao do arquivo @(Buildfiles) do local $(BuildFolder)\paginas\$(Sistema).pages" Condition="Exists('%(Buildfiles.Identity)')" />
+        <Delete Files="@(Buildfiles)"/>
+        <RemoveDir Directories="@(FoldersToClean)" />
+		<ItemGroup>
+			<ZipPdbSrcFiles Include="$(BuildFolder)\bin\*.pdb" />			
+		</ItemGroup>
+		<Message Text="Zipando os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipPdbSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipNamePdb).zip"/>
+		<Message Text="Excluindo os arquivo(s) pdb do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+		<Delete Files="@(ZipPdbSrcFiles)" />
+		<ItemGroup>
+			<ZipSrcFiles Include="$(BuildFolder)\**\*.*" Exclude="$(BuildFolder)\$(ZipNamePdb).zip" />			
+		</ItemGroup>
+		<Message Text="Zipando os arquivo(s) restantes do sistema $(Sistema) a partir do diretorio $(BuildFolder)" />
+		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(ZipSrcFiles)" RemoveRoot="$(BuildFolder)" ZipFileName="$(BuildFolder)\$(ZipName).zip"/>
+</Target>
+<Target Name="WebDeploy" DependsOnTargets="DeployPages" >
+     <Message Text="Efetuando o deploy dos arquivo(s) a partir do zip $(BuildFolder)\$(ZipName).zip para $(DestDeploy)" />
+	 <Exec EchoOff="true" Command="$(PathMSBuild)\msdeploy.exe -verb:sync -source:package='$(BuildFolder)\$(ZipName).zip' -dest:contentPath='$(DestDeploy)',computerName='https://10.200.240.19:8172/msdeploy.axd?site=Default%20Web%20Site',UserName='tfsdeploy',Password='Desp@2015',AuthType='NTLM' -allowUntrusted -enableRule:DoNotDeleteRule" />
+	 <Message Text="Processo Finalizado" />   
+</Target>
+<Target Name="WebDeployLocal" DependsOnTargets="DeployPages" >
+     <Exec Command="$(PathMSBuild)\msdeploy.exe -verb:sync -source:package='$(BuildFolder)\$(ZipName).zip' -dest:contentPath='$(DestDeploy)' -enableRule:DoNotDeleteRule " />
+</Target>
+</Project>

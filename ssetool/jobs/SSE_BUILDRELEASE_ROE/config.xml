@@ -89,6 +89,9 @@
       <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\ROE.Pages&quot; &quot;roe&quot; &quot;appnet&quot; &quot;roe.dll,roe.pages.dll&quot;&#xd;
 </command>
     </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>C:\sse\tools\nuget\nuget_pack &quot;%WORKSPACE%\source\roe.pages\roe.nuspec&quot;  &quot;%WORKSPACE%\drop&quot;</command>
+    </hudson.tasks.BatchFile>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">

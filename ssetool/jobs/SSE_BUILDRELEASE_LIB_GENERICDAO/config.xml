@@ -15,7 +15,7 @@ binarios e biblioteca nuget - RELEASE -  a partir do branch MASTER</description>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/feat_ci_cmelo</name>
+        <name>*/master</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>

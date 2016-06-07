@@ -14,27 +14,39 @@
             <a class="string-array">
               <string>alocacaopei</string>
               <string>alteracaoeventos</string>
+              <string>atribaula</string>
+              <string>aulassematribuicao</string>
+              <string>bienio</string>
               <string>bonush</string>
-              <string>cesu </string>
+              <string>boletimsaresp</string>
+              <string>cesu</string>
               <string>consultadadoscadastrais</string>
               <string>contageh</string>
-              <string>enquadramentoqae </string>
-              <string>estprovisoria </string>
+              <string>diarias</string>
+              <string>enquadramentoqae</string>
+              <string>escolha</string>
+              <string>estruturaorg</string>
+              <string>estprovisoria</string>
               <string>fichafai</string>
               <string>genericdao</string>
+              <string>gerenciarsistemas</string>
               <string>gratificacaofuncao</string>
               <string>gratificacaogap</string>
               <string>gratificacaogge</string>
               <string>gratificacaogdpi</string>
+              <string>guiarecolhimento</string>
               <string>meritocracia</string>
+              <string>promocao</string>
               <string>prodesp.dataaccess</string>
               <string>qualificacao</string>
               <string>relatorio</string>
-              <string>remocaoqae </string>
-              <string>remocaoqm  </string>
               <string>roe</string>
-              <string>securitygdae </string>
-              <string>utils </string>
+              <string>remocaoqae</string>
+              <string>remocaoqm</string>
+              <string>reposicaoaulas</string>
+              <string>sapj</string>
+              <string>securitygdae</string>
+              <string>utils</string>
               <string>utilscgrh</string>
               <string>valerefeicao</string>
             </a>
