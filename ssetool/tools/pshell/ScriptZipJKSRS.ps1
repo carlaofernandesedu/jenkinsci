@@ -9,11 +9,11 @@ Param(
    [Parameter(Mandatory=$True,Position=2,HelpMessage="tipo de deploy (lib, appweb,appnet, svc ")]
    [string]$typeapp,
 
-   [Parameter(Mandatory=$True,Position=2,HelpMessage="nome do arquivo zip")]
+   [Parameter(Mandatory=$True,Position=3,HelpMessage="nome do arquivo zip")]
    [string]$nomezip,
 
 
-   [Parameter(Mandatory=$True,Position=3,HelpMessage="arquivos array das pasta bin que serao enviados")]
+   [Parameter(Mandatory=$True,Position=4,HelpMessage="arquivos array das pasta bin que serao enviados")]
    [string[]]$keepbinfiles
 
 )
