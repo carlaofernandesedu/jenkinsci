@@ -75,7 +75,8 @@
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS , luiztorato@gmail.com, pportela@sp.gov.br, carlaofernandesedu@gmail.com,alves2k@gmail.com ,vbernardes@sp.gov.br, v.borges.alb@gmail.com, williancsilva@gmail.com</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS , luiztorato@gmail.com, pportela@sp.gov.br, carlaofernandesedu@gmail.com,alves2k@gmail.com ,vbernardes@sp.gov.br, v.borges.alb@gmail.com, williancsilva@gmail.com,
+carlosmelo@sp.gov.br, marcospereira@sp.gov.br</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>

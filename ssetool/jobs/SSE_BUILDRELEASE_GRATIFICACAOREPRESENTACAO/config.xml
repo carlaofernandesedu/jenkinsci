@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>GratificacaoRepresentacao - Realizar procedimentos de build e criacao de artefatos binarios </description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.5">
+    <scms>
+      <hudson.plugins.git.GitSCM plugin="git@2.4.4">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/_git/GratificacaoRepresentacao</url>
+            <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+          <hudson.plugins.git.BranchSpec>
+            <name>*/master</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions>
+          <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+            <relativeTargetDir>source/gratificacaorepresentacao</relativeTargetDir>
+          </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        </extensions>
+      </hudson.plugins.git.GitSCM>
+      <hudson.plugins.git.GitSCM plugin="git@2.4.4">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/GratificacaoRepresentacao/_git/GratificacaoRepresentacao.Pages</url>
+            <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+          <hudson.plugins.git.BranchSpec>
+            <name>*/master</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions>
+          <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+            <relativeTargetDir>source/gratificacaorepresentacao.pages</relativeTargetDir>
+          </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        </extensions>
+      </hudson.plugins.git.GitSCM>
+    </scms>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>c:\sse\work\jks\release\gratificacaorepresentacao</customWorkspace>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\gratificacaorepresentacao.Pages\gratificacaorepresentacao.Pages.sln&quot;  </command>
+    </hudson.tasks.BatchFile>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
+      <msBuildName>MSBUILD2013</msBuildName>
+      <msBuildFile>$WORKSPACE\source\gratificacaorepresentacao.Pages\gratificacaorepresentacao.Pages.sln</msBuildFile>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\GratificacaoRepresentacao.Pages</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+    <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
+      <projectKey>gratificacaorepresentacao</projectKey>
+      <projectName>gratificacaorepresentacao</projectName>
+      <projectVersion>1.0</projectVersion>
+      <additionalArguments>/d:sonar.verbose=true</additionalArguments>
+    </hudson.plugins.sonar.MsBuildSQRunnerBegin>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
+      <msBuildName>MSBUILD2015</msBuildName>
+      <msBuildFile>$WORKSPACE\source\gratificacaorepresentacao.Pages\gratificacaorepresentacao.Pages.sln</msBuildFile>
+      <cmdLineArgs>/P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+    <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
+    <hudson.tasks.BatchFile>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\GratificacaoRepresentacao.Pages&quot; &quot;gratificacaorepresentacao&quot; &quot;appnet&quot; &quot;gratificacaorepresentacao.dll,gratificacaorepresentacao.pages.dll&quot; &#xd;
+</command>
+    </hudson.tasks.BatchFile>
+  </builders>
+  <publishers>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
+      <recipientList>$DEFAULT_RECIPIENTS, luiztorato@gmail.com</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+          <email>
+            <recipientList></recipientList>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>

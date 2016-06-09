@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="ZipBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  >
+<PropertyGroup>
+    <Sistema      Condition="'$(Sistema)'==''">package</Sistema>
+	<Ambiente     Condition="'$(Ambiente)'==''">teste</Ambiente>
+	<PathMSBuild  Condition="'$(PathMSBuild)'==''">c:\sse\tools\msbuild</PathMSBuild>
+	<BuildFolder  Condition="'$(BuildFolder)'==''">c:\sse\work\jks</BuildFolder>
+	<SourceFolder Condition="'$(SourceFolder)'==''">c:\sse\work\jks</SourceFolder>
+    <ZipName      Condition="'$(ZipName)'==''">package</ZipName>
+	<DestDeploy  Condition="'$(DestDeploy)'==''">c:\temp\webdeploy</DestDeploy>
+  </PropertyGroup>
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Time" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Zip" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.Cab" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Compression.DNZip" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.File" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.FindUnder" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.FileSystem.RoboCopy" />
+  <UsingTask AssemblyFile="$(PathMSBuild)\Tools\MSBuildExtensionPack\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Computer.WindowsService" />
+  <Choose>
+    <When Condition = "'$(Sistema)'=='municipalizacao' and '$(Ambiente)'=='producao'" >
+		<PropertyGroup>
+			<BuildFolder>$(BuildFolder)\prd\municipalizacao\publish</BuildFolder>
+			<SourceFolder>$(SourceFolder)\prd\municipalizacao\source</SourceFolder>
+			<DestDeploy>d:\portal\municipalizacao</DestDeploy>
+		</PropertyGroup>		
+    </When>
+  </Choose>
+<Target Name="LerArquivo" Condition="'$(BuildFolder)'!='c:\sse\work\jks'" >	
+		<ReadLinesFromFile File="$(SourceFolder)\publish.txt" >
+            <Output
+                TaskParameter="Lines"
+                ItemName="ItemsFromFile"/>
+        </ReadLinesFromFile>
+		<Message Text="Lendo o arquivo $(SourceFolder)\Publish.txt e coletando os arquivos" /> 
+</Target>
+<Target Name="ZipBuild" Condition="'$(BuildFolder)'!='c:\sse\work\jks\'" >
+    <Message Text="Zipando os arquivo(s) do sistema $(Sistema) " />
+	<ItemGroup>
+			<Buildfiles Include="$(SourceFolder)\%(ItemsFromFile.Identity)"  />
+	</ItemGroup> 
+	<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(Buildfiles)" RemoveRoot="$(SourceFolder)" ZipFileName="$(BuildFolder)\$(ZipName).zip"/>
+</Target>
+<Target Name="WebDeploy">
+     <Exec Command="$(PathMSBuild)\msdeploy.exe -verb:sync -source:package='$(BuildFolder)\$(ZipName).zip' -dest:contentPath='$(DestDeploy)',computerName='https://10.200.240.19:8172/msdeploy.axd?site=Default%20Web%20Site',UserName='tfsdeploy',Password='Desp@2015',AuthType='NTLM' -allowUntrusted -enableRule:DoNotDeleteRule" />
+</Target>
+<Target Name="WebDeployLocal">
+     <Exec Command="$(PathMSBuild)\msdeploy.exe -verb:sync -source:package='$(BuildFolder)\$(ZipName).zip' -dest:contentPath='$(DestDeploy)' -enableRule:DoNotDeleteRule " />
+</Target>
+</Project>

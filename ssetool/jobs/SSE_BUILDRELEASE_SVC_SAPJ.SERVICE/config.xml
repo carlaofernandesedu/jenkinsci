@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Servico windows GRATIFICACAOGGE.WS - Realizar procedimentos de build e criacao de artefatos &#xd;
+  <description>Servico windows SAPJ.SERVICE - Realizar procedimentos de build e criacao de artefatos &#xd;
 binarios e biblioteca nuget</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
@@ -9,7 +9,7 @@ binarios e biblioteca nuget</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://seducsp.visualstudio.com/DefaultCollection/GratificacaoGGE/_git/GratificacaoGGE.WS</url>
+        <url>https://seducsp.visualstudio.com/DefaultCollection/SAPJ/_git/SAPJ.Service</url>
         <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -22,7 +22,7 @@ binarios e biblioteca nuget</description>
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>source/gratificacaogge.ws</relativeTargetDir>
+        <relativeTargetDir>source/sapj.service</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
@@ -32,14 +32,14 @@ binarios e biblioteca nuget</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\release\gratificacaogge.ws</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\svcsapj</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\GratificacaoGGE.WS\GratificacaoGGE.WS.sln&quot;  </command>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\SAPJ.Service\SAPJ.Service.sln&quot;  </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>$WORKSPACE\source\GratificacaoGGE.WS\GratificacaoGGE.WS.sln</msBuildFile>
+      <msBuildFile>$WORKSPACE\source\SAPJ.Service\SAPJ.Service.sln</msBuildFile>
       <cmdLineArgs> /P:Configuration=Release /P:Platform=x64</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
@@ -49,11 +49,11 @@ binarios e biblioteca nuget</description>
       <command>IF NOT EXIST %WORKSPACE%\drop\nul MKDIR %WORKSPACE%\drop</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSRS.ps1 &quot;%WORKSPACE%\source\GratificacaoGGE.WS\bin&quot; &quot;gratificacaogge.ws&quot; &quot;svc&quot; &quot;gratificacaogge.ws&quot; &quot;*.*&quot; </command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSRS.ps1 &quot;%WORKSPACE%\source\SAPJ.Service\bin&quot; &quot;svcsapj&quot; &quot;svc&quot; &quot;sapj&quot; &quot;*.*&quot; </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
-      <projectKey>GRATIFICACAOGGE.WS</projectKey>
-      <projectName>GRATIFICACAOGGE.WS</projectName>
+      <projectKey>SAPJ.SERVICE</projectKey>
+      <projectName>SAPJ.SERVICE</projectName>
       <projectVersion>1.0</projectVersion>
       <additionalArguments>/d:sonar.verbose=true
 /d:sonar.analysis.mode=preview
@@ -61,7 +61,7 @@ binarios e biblioteca nuget</description>
     </hudson.plugins.sonar.MsBuildSQRunnerBegin>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2015</msBuildName>
-      <msBuildFile>$WORKSPACE\source\GratificacaoGGE.WS\GratificacaoGGE.WS.sln</msBuildFile>
+      <msBuildFile>$WORKSPACE\source\SAPJ.Service\SAPJ.Service.sln</msBuildFile>
       <cmdLineArgs> /P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
@@ -71,7 +71,7 @@ binarios e biblioteca nuget</description>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS, luiztorato@gmail.com</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS, julyannacris.medeiros@gmail.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
