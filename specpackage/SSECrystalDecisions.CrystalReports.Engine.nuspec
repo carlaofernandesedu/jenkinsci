@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SSECrystalDecisions.CrystalReports.Engine</id>
+        <version>10.5.0.0</version>
+        <title>SSECrystalDecisions.CrystalReports.Engine</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>SSECrystalDecisions.CrystalReports.Engine</description>
+        <summary>SSECrystalDecisions.CrystalReports.Engine</summary>
+    </metadata>
+    <files>
+        <file src="lib\net45\CrystalDecisions.CrystalReports.Engine.dll" target="lib\CrystalDecisions.CrystalReports.Engine.dll" />
+    </files>
+</package>

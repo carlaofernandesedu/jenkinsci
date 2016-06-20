@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SSECrystalDecisions.ReportSource</id>
+        <version>10.5.0.0</version>
+        <title>SSECrystalDecisions.ReportSource</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>SSECrystalDecisions.ReportSource</description>
+        <summary>SSECrystalDecisions.ReportSource</summary>
+    </metadata>
+    <files>
+        <file src="lib\net45\CrystalDecisions.ReportSource.dll" target="lib\CrystalDecisions.ReportSource.dll" />
+    </files>
+</package>

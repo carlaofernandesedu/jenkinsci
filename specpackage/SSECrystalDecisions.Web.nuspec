@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SSECrystalDecisions.Web</id>
+        <version>10.5.0.0</version>
+        <title>SSECrystalDecisions.Web</title>
+        <authors>Prodesp</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>SSECrystalDecisions.Web</description>
+        <summary>SSECrystalDecisions.Web</summary>
+    </metadata>
+    <files>
+        <file src="lib\net45\CrystalDecisions.Web.dll" target="lib\CrystalDecisions.Web.dll" />
+    </files>
+</package>

@@ -107,7 +107,15 @@ function ZIP-AppSVC($SourceFolder,$PubRootFolder,$Sistema,$pNomeZip,$KeepBINFile
             if (!(Test-Path($FolderBIN))) { mkdir $FolderBIN}
             $SourceFiles  = $SourceFolder + '\*.*'
             Copy-Item $SourceFiles $FolderBIN -Force
-            #Verificar restrição de arquivos definidos para o pacote 
+            #Alguns servicos possuem a pasta app.publish
+            $AppPublish = $FolderBin + '\app.publish'
+            $SourcePublish = $SourceFolder + '\app.publish\*.*'
+            if (Test-Path($AppPublish))
+            {
+               Write-Host 'Copiando arquivos de' $SourcePublish 'para' $AppPublish
+               Copy-Item $SourcePublish $AppPublish -Force
+            }
+            #Verificar restricao de arquivos definidos para o pacote 
             $FolderBINExclusao = $FolderBin + '\*.*'
             Write-Host 'Excluindo os arquivos da pasta' $FolderBINExclusao 'mantendo os arquivos' $KeepBINFiles
             Remove-Item $FolderBINExclusao -Exclude $KeepBINFiles 
