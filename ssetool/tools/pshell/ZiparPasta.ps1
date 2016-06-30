@@ -1,4 +1,4 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 Param(
    [Parameter(Mandatory=$True,Position=1,HelpMessage="dirorigem")]
    [string]$dirorigem,

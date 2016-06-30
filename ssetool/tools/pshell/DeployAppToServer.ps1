@@ -83,47 +83,8 @@ $Sistema -eq "utilscgrh"
     $SistemaValido = $true 
 
 }
-elseif
-(
-$Sistema -eq "alocacaopei" -Or
-$Sistema -eq "alteracaoeventos" -Or
-$Sistema -eq "atribaula" -Or
-$Sistema -eq "aulassematribuicao" -Or
-$Sistema -eq "bienio" -Or
-$Sistema -eq "bonush" -Or
-$Sistema -eq "boletimsaresp" -Or
-$Sistema -eq "cesu" -Or
-$Sistema -eq "consultadadoscadastrais" -Or
-$Sistema -eq "contageh" -Or
-$Sistema -eq "diarias" -Or
-$Sistema -eq "enquadramentoqae" -Or
-$Sistema -eq "escolha" -Or
-$Sistema -eq "estruturaorg" -Or
-$Sistema -eq "estprovisoria" -Or
-$Sistema -eq "fichafai" -Or
-$Sistema -eq "genericdao" -Or
-$Sistema -eq "gerenciarsistemas" -Or
-$Sistema -eq "gratificacaofuncao" -Or
-$Sistema -eq "gratificacaogap" -Or
-$Sistema -eq "gratificacaogge" -Or
-$Sistema -eq "gratificacaogdpi" -Or
-$Sistema -eq "guiarecolhimento" -Or
-$Sistema -eq "meritocracia" -Or
-$Sistema -eq "promocao" -Or
-$Sistema -eq "prodesp.dataaccess" -Or
-$Sistema -eq "qualificacao" -Or
-$Sistema -eq "relatorio" -Or
-$Sistema -eq "roe" -Or
-$Sistema -eq "remocaoqae" -Or
-$Sistema -eq "remocaoqm" -Or
-$Sistema -eq "reposicaoaulas" -Or
-$Sistema -eq "sapj" -Or
-$Sistema -eq "securitygdae" -Or
-$Sistema -eq "utils" -Or
-$Sistema -eq "utilscgrh" -Or
-$Sistema -eq "valerefeicao"
-)
-{
+else
+ {
     #$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
 	#$Destdeploy = 'd:\' + ($Ambiente) + '\portalnet'
     $Source = "c:\sse\work\jks\release\" + ($Sistema)  +  "\drop\portalnet.zip"

@@ -1,0 +1,2 @@
+ECHO OFF
+C:\sse\tools\nuget\NuGet.exe push %1  -Source https://seducsp.pkgs.visualstudio.com/DefaultCollection/_packaging/PORTALNET/nuget/v2  -apikey "hhjfhwxo2eekxmguvjl6ysd6ve2zqy54err2zxpemzsdgmn53w4q"
