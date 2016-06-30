@@ -5,12 +5,12 @@
   <displayName>SSE_PRD_MUNICIPALIZACAO</displayName>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.4">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <url>https://seducsp.visualstudio.com/DefaultCollection/SistemasLegados/_git/MUNICIPALIZACAO</url>
-        <credentialsId>514db398-b47c-4ed1-bd27-4fb8cc10781d</credentialsId>
+        <credentialsId>e68266c7-17f4-416d-a6e6-21bf360f235c</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -34,7 +34,7 @@
   <concurrentBuild>false</concurrentBuild>
   <customWorkspace>c:\sse\work\jks\prd\municipalizacao</customWorkspace>
   <builders>
-    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.24">
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
       <msBuildFile>c:\sse\tools\msbuild\ZiparAppLegado.proj</msBuildFile>
       <cmdLineArgs>/t:LerArquivo,ZipBuild,WebDeploy /p:Sistema=municipalizacao /p:Ambiente=producao  /p:ZipName=municipalizacao</cmdLineArgs>

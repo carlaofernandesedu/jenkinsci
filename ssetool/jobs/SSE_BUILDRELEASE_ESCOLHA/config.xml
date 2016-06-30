@@ -91,7 +91,7 @@
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS, pportela@sp.gov.br</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS, luiztorato@gmail.com</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>

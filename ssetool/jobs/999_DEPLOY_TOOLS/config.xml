@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Download de arquivos de suporte para compilacao</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.starteam.StarTeamSCM" plugin="StarTeam@0.7.0-SNAPSHOT">
+    <hostName>10.200.45.226</hostName>
+    <port>49201</port>
+    <projectName>PROCON - Rama</projectName>
+    <viewName>Desenvolvimento</viewName>
+    <folderName>tools</folderName>
+    <labelName></labelName>
+    <credentialsId>c41f8918-86f6-46c1-abc7-38c23e455a1a</credentialsId>
+    <promotionstate>false</promotionstate>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <customWorkspace>C:\procon\tools</customWorkspace>
+  <builders/>
+  <publishers/>
+  <buildWrappers/>
+</project>

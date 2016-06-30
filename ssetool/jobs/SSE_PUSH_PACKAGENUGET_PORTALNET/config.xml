@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Job para possibilitar subir o pacote nuget gerado pelo processo de Build no gerenciador de Pacotes&#xd;
+O Pacote será empurrado para o gerenciador de pacotes &#xd;
+https://seducsp.pkgs.visualstudio.com/DefaultCollection/_packaging/PORTALNET/nuget/v2&#xd;
+NESSE REPOSITORIO DEVEM PERMANECER OS PACOTES NUGETS QUE ESTÂO EM PRODUÇÃO</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>SISTEMA</name>
+          <description>Escolher o nome do pacote Nuget para ser empurrado o Gerenciador de Pacotes do VSTS - nome da fonte PORTALNET_INTEGRACAO</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>contageh</string>
+              <string>diarias</string>
+              <string>genericdao</string>
+              <string>gratificacaogge</string>
+              <string>prodesp.dataaccess</string>
+              <string>qualificacao</string>
+              <string>relatorio</string>
+              <string>roe</string>
+              <string>sapj</string>
+              <string>securitygdae</string>
+              <string>utils</string>
+              <string>utilscgrh</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>ARQNUGET</name>
+          <description>Informar exatamente o nome do pacote do Nuget incluindo a extensao (.nupkg) para ser empurrado o Gerenciador de Pacotes do VSTS - nome da fonte PORTALNET_INTEGRACAO
+- Esse arquivo foi gerado no processo de Build do Projeto e esta na pasta DROP.</description>
+          <defaultValue>naoinformado</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>C:\sse\tools\nuget\nuget_pushR C:\sse\work\jks\release\%SISTEMA%\drop\%ARQNUGET%</command>
+    </hudson.tasks.BatchFile>
+  </builders>
+  <publishers>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
+      <recipientList>$DEFAULT_RECIPIENTS, pportela@sp.gov.br , luiztorato@gmail.com</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+          <email>
+            <recipientList></recipientList>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT
+O modulo  $SISTEMA foi atualizado com o pacote $ARQNUGET</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>false</attachBuildLog>
+            <compressBuildLog>false</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT </defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>false</attachBuildLog>
+      <compressBuildLog>false</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>

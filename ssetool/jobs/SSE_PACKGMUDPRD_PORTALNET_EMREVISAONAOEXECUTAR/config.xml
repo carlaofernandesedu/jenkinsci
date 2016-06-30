@@ -1,15 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Projeto de Deploy  para o servidor simulando ambiente Teste -  http://10.200.240.19/portalnetpreproducao</description>
-  <displayName>SSE_DEPLOY_HOM_PORTALNET</displayName>
+  <description>Criar pacote para GMUD de Producao Sistema PortalNET  no servidor - 10.200.240.19 - D:\GMUD Emergencial - (portalnet)</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.ChoiceParameterDefinition>
           <name>SISTEMA</name>
-          <description>Nome do Sistema/Modulo que sera feito o deploy</description>
+          <description>Módulo Solicitante. Observar que necessita de procedimento de GMUD para que o pacote possa efetivamente subir para producao</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>alocacaopei</string>
@@ -78,6 +77,11 @@
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>RESUMOMUDANCA</name>
+          <description>Informar resumo justificativa da GMUD aos envolvidos</description>
+          <defaultValue>Informar resumo justificativa da GMUD aos envolvidos</defaultValue>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -88,27 +92,23 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>C:\sse\work\jks\deploy\hom\portalnet</customWorkspace>
+  <customWorkspace>C:\sse\work\jks\compress</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\homologacao\portalnet&quot;</command>
-    </hudson.tasks.BatchFile>
-    <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\DeployAppToServer.ps1 %Sistema% &quot;homologacao&quot; %WORKSPACE% %BUILD_NUMBER% &quot;D:\sourcegmud\homologacao\portalnet&quot;</command>
+      <command>REM C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\RunRemoteShell.ps1 &quot;ZiparPortalNetProd&quot; %BUILD_NUMBER%</command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS, luiztorato@gmail.com , pportela@sp.gov.br, carlaofernandesedu@gmail.com, vbernardes@sp.gov.br</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS , carlosmelo@sp.gov.br, marcospereira@sp.gov.br</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>
             <recipientList></recipientList>
             <subject>$PROJECT_DEFAULT_SUBJECT</subject>
             <body>$PROJECT_DEFAULT_CONTENT
-Solicitante da execucao  $BUILD_USER
-O modulo $SISTEMA  foi atualizado no ambiente do portalnet - http://10.200.240.19/portalnetpreproducao
-</body>
+O modulo solicitante do pacote para GMUD ambiente de HOMOLOGACAO foi o: $SISTEMA
+Pacote gerado por $BUILD_USER </body>
             <recipientProviders>
               <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
               <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>

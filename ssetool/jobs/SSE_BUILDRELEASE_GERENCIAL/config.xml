@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>DIARIAS- Realizar procedimentos de build e criacao de artefatos binarios </description>
-  <displayName>SSE_BUILDRELEASE_DIARIAS</displayName>
+  <description>Gerencial - Realizar procedimentos de build e criacao de artefatos binarios </description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.5">
@@ -11,20 +10,20 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>https://seducsp.visualstudio.com/DefaultCollection/_git/Diarias</url>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/_git/Gerencial</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
         <branches>
           <hudson.plugins.git.BranchSpec>
-            <name>*/feat_ci</name>
+            <name>*/master</name>
           </hudson.plugins.git.BranchSpec>
         </branches>
         <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source/diarias</relativeTargetDir>
+            <relativeTargetDir>source/gerencial</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -32,20 +31,20 @@
         <configVersion>2</configVersion>
         <userRemoteConfigs>
           <hudson.plugins.git.UserRemoteConfig>
-            <url>https://seducsp.visualstudio.com/DefaultCollection/Diarias/_git/Diarias.Pages</url>
+            <url>https://seducsp.visualstudio.com/DefaultCollection/Gerencial/_git/Gerencial.Pages</url>
             <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
           </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
         <branches>
           <hudson.plugins.git.BranchSpec>
-            <name>*/feat_ci</name>
+            <name>*/master</name>
           </hudson.plugins.git.BranchSpec>
         </branches>
         <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
         <submoduleCfg class="list"/>
         <extensions>
           <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-            <relativeTargetDir>source/diarias.pages</relativeTargetDir>
+            <relativeTargetDir>source/gerencial.pages</relativeTargetDir>
           </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
         </extensions>
       </hudson.plugins.git.GitSCM>
@@ -57,28 +56,28 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\release\diarias</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\gerencial</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\Diarias.Pages\Diarias.Pages.sln&quot;  </command>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\gerencial.Pages\gerencial.Pages.sln&quot;  </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>$WORKSPACE\source\Diarias.Pages\Diarias.Pages.sln</msBuildFile>
-      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\Diarias.Pages</cmdLineArgs>
+      <msBuildFile>$WORKSPACE\source\gerencial.Pages\gerencial.Pages.sln</msBuildFile>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=&quot;x64&quot;  /p:DeployOnBuild=true /p:PublishProfile=homologacao /p:publishUrl=%WORKSPACE%\drop\portalnet\paginas\Gerencial.Pages</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
       <unstableIfWarnings>false</unstableIfWarnings>
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
-      <projectKey>Diarias</projectKey>
-      <projectName>Diarias</projectName>
+      <projectKey>gerencial</projectKey>
+      <projectName>gerencial</projectName>
       <projectVersion>1.0</projectVersion>
       <additionalArguments>/d:sonar.verbose=true</additionalArguments>
     </hudson.plugins.sonar.MsBuildSQRunnerBegin>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2015</msBuildName>
-      <msBuildFile>$WORKSPACE\source\Diarias.Pages\Diarias.Pages.sln</msBuildFile>
+      <msBuildFile>$WORKSPACE\source\gerencial.Pages\gerencial.Pages.sln</msBuildFile>
       <cmdLineArgs>/P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
@@ -86,13 +85,13 @@
     </hudson.plugins.msbuild.MsBuildBuilder>
     <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\Diarias.Pages&quot; &quot;diarias&quot; &quot;appnet&quot; &quot;diarias.dll,diarias.pages.dll&quot; &#xd;
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -command c:\sse\tools\pshell\ScriptZipJKSR.ps1 &quot;%WORKSPACE%\drop\portalnet\paginas\Gerencial.Pages&quot; &quot;gerencial&quot; &quot;appnet&quot; &quot;gerencial.dll,gerencial.pages.dll&quot; &#xd;
 </command>
     </hudson.tasks.BatchFile>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS,carlaofernandesedu@gmail.com</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS, julyannacris.medeiros@gmail.com, pportela@sp.gov.br</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Servico windows ROE.SERVICE - Realizar procedimentos de build e criacao de artefatos &#xd;
+  <description>Servico windows PNAE.SERVICES.WIN - Realizar procedimentos de build e criacao de artefatos &#xd;
 binarios e biblioteca nuget</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
@@ -9,7 +9,7 @@ binarios e biblioteca nuget</description>
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://seducsp.visualstudio.com/DefaultCollection/ROE/_git/ROE.Service</url>
+        <url>https://seducsp.visualstudio.com/DefaultCollection/PNAE/_git/PNAE.Services.Win</url>
         <credentialsId>2e2ffa8d-9490-408c-8317-f126383bd758</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -22,7 +22,7 @@ binarios e biblioteca nuget</description>
     <submoduleCfg class="list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>source/roe.service</relativeTargetDir>
+        <relativeTargetDir>source/pnae.services.win</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
@@ -32,14 +32,14 @@ binarios e biblioteca nuget</description>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>c:\sse\work\jks\release\svcroe</customWorkspace>
+  <customWorkspace>c:\sse\work\jks\release\svcpnae</customWorkspace>
   <builders>
     <hudson.tasks.BatchFile>
-      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\ROE.Service\ROE.Service.sln&quot;  </command>
+      <command>C:\sse\tools\nuget\nuget_restore  &quot;%WORKSPACE%\source\pnae.services.win\pnae.services.win.sln&quot;  </command>
     </hudson.tasks.BatchFile>
     <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
       <msBuildName>MSBUILD2013</msBuildName>
-      <msBuildFile>$WORKSPACE\source\ROE.Service\ROE.Service.sln</msBuildFile>
+      <msBuildFile>$WORKSPACE\source\pnae.services.win\pnae.services.win.sln</msBuildFile>
       <cmdLineArgs> /P:Configuration=Release /P:Platform=x64</cmdLineArgs>
       <buildVariablesAsProperties>false</buildVariablesAsProperties>
       <continueOnBuildFailure>false</continueOnBuildFailure>
@@ -49,12 +49,29 @@ binarios e biblioteca nuget</description>
       <command>IF NOT EXIST %WORKSPACE%\drop\nul MKDIR %WORKSPACE%\drop</command>
     </hudson.tasks.BatchFile>
     <hudson.tasks.BatchFile>
-      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSRS.ps1 &quot;%WORKSPACE%\source\ROE.Service\bin&quot; &quot;svcroe&quot; &quot;svc&quot; &quot;roe&quot; &quot;*.*&quot; </command>
+      <command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -ExecutionPolicy ByPass -file c:\sse\tools\pshell\ScriptZipJKSRS.ps1 &quot;%WORKSPACE%\source\pnae.services.win\bin&quot; &quot;svcpnae&quot; &quot;svc&quot; &quot;pnae.services.win&quot; &quot;*.*&quot; </command>
     </hudson.tasks.BatchFile>
+    <hudson.plugins.sonar.MsBuildSQRunnerBegin plugin="sonar@2.3">
+      <projectKey>PNAE.SERVICES</projectKey>
+      <projectName>PNAE.SERVICES</projectName>
+      <projectVersion>1.0</projectVersion>
+      <additionalArguments>/d:sonar.verbose=true
+/d:sonar.analysis.mode=preview
+/d:sonar.issuesReport.console.enable=true</additionalArguments>
+    </hudson.plugins.sonar.MsBuildSQRunnerBegin>
+    <hudson.plugins.msbuild.MsBuildBuilder plugin="msbuild@1.25">
+      <msBuildName>MSBUILD2015</msBuildName>
+      <msBuildFile>$WORKSPACE\source\pnae.services.win\pnae.services.win.sln</msBuildFile>
+      <cmdLineArgs> /P:Configuration=Release /P:Platform=x64 /p:TargetFrameworkVersion=v4.5</cmdLineArgs>
+      <buildVariablesAsProperties>false</buildVariablesAsProperties>
+      <continueOnBuildFailure>false</continueOnBuildFailure>
+      <unstableIfWarnings>false</unstableIfWarnings>
+    </hudson.plugins.msbuild.MsBuildBuilder>
+    <hudson.plugins.sonar.MsBuildSQRunnerEnd plugin="sonar@2.3"/>
   </builders>
   <publishers>
     <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.42">
-      <recipientList>$DEFAULT_RECIPIENTS, jcapellini@sp.gov.br, vbernardes@sp.gov.br, deyoshizato@gmail.com , hdguimaraes@gmail.com</recipientList>
+      <recipientList>$DEFAULT_RECIPIENTS, carlosmelo@sp.gov.br</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.AlwaysTrigger>
           <email>

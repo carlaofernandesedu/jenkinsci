@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Projeto de Deploy  para o servidor simulando ambiente Teste -  http://10.200.240.19/portalnet</description>
+  <description>Projeto de Deploy  para o servidor simulando ambiente Producao -  http://10.200.240.19/portalnet</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
@@ -13,41 +13,67 @@
             <a class="string-array">
               <string>alocacaopei</string>
               <string>alteracaoeventos</string>
+              <string>alteracaojornada</string>
+              <string>atestadomedico</string>
               <string>atribaula</string>
               <string>aulassematribuicao</string>
+              <string>avaliacao</string>
               <string>bienio</string>
-              <string>bonush</string>
+              <string>boletimfrequencia</string>
               <string>boletimsaresp</string>
+              <string>bonush</string>
+              <string>censoescolar</string>
+              <string>certificacao</string>
               <string>cesu</string>
               <string>consultadadoscadastrais</string>
               <string>contageh</string>
               <string>diarias</string>
               <string>enquadramentoqae</string>
+              <string>envioemail</string>
               <string>escolha</string>
-              <string>estruturaorg</string>
+              <string>estagioprobatorio</string>
               <string>estprovisoria</string>
+              <string>estruturaorg</string>
               <string>fichafai</string>
               <string>genericdao</string>
               <string>gerenciarsistemas</string>
+              <string>gps</string>
               <string>gratificacaofuncao</string>
               <string>gratificacaogap</string>
-              <string>gratificacaogge</string>
               <string>gratificacaogdpi</string>
+              <string>gratificacaogge</string>
+              <string>gratificacaorepresentacao</string>
               <string>guiarecolhimento</string>
+              <string>importacao</string>
+              <string>indicacaoensinointegral</string>
+              <string>infocre</string>
+              <string>licenca202</string>
+              <string>licencapremio</string>
               <string>meritocracia</string>
-              <string>promocao</string>
+              <string>planoacao</string>
+              <string>planoacaoensino</string>
+              <string>pnae</string>
+              <string>probatorioqseqae</string>
               <string>prodesp.dataaccess</string>
+              <string>promocao</string>
+              <string>promocaoqae</string>
               <string>qualificacao</string>
+              <string>questionario</string>
               <string>relatorio</string>
-              <string>roe</string>
               <string>remocaoqae</string>
               <string>remocaoqm</string>
+              <string>reorganizacao</string>
               <string>reposicaoaulas</string>
+              <string>roe</string>
+              <string>saesp</string>
               <string>sapj</string>
+              <string>scpse</string>
               <string>securitygdae</string>
+              <string>titulo</string>
               <string>utils</string>
               <string>utilscgrh</string>
               <string>valerefeicao</string>
+              <string>valorhorah</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
